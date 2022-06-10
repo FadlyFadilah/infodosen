@@ -1,37 +1,60 @@
-<?php 
+<?php
 session_start();
 
-
-if( isset($_SESSION["login"]) ) {
-    if($_SESSION["level"] === 'admin'){
+if (isset($_SESSION["login"])) {
+    if ($_SESSION["level"] === 'admin') {
         header("Location: index.php");
         exit;
     } elseif ($_SESSION["level"] === 'dosen') {
-        header("Location: dosen.php");
+        header("Location: detail_dosen.php");
         exit;
     }
 }
 
 require 'pages/fungsi.php';
 
-if( isset($_POST["login"]) ) {
+if (isset($_POST["login"])) {
 
-	$username = $_POST["username"];
-	$password = $_POST["password"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-	$result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
 
-	if( mysqli_num_rows($result) === 1 ) {
-		// cek password
-		$row = mysqli_fetch_assoc($result);
-		if( password_verify($password, $row["password"]) ) {
-            $_SESSION["nik"] = $row["nik"];
-            $_SESSION["level"] = $row["level"];
-			header("Location: index.php");
-			exit;
-		}
-	}
-	$error = true;
+    $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+
+    if (mysqli_num_rows($result) === 1) {
+        // cek password
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($password, $row["password"])) {
+
+            if ($row["level"] === 'admin') {
+                $_SESSION["login"] = true;
+                $_SESSION["nik"] = $row["username"];
+                $_SESSION["level"] = $row["level"];
+                header("Location: index.php");
+                exit;
+            } else {
+                $users = mysqli_query($conn, "SELECT * FROM dosen WHERE nik = '$username'");
+                if (mysqli_num_rows($users) === 1) {
+                    $_SESSION["login"] = true;
+                    $_SESSION["nik"] = $row["username"];
+                    $_SESSION["level"] = $row["level"];
+                    header("Location: detail_dosen.php");
+                    exit;
+                } else {
+                    $user = query("SELECT * FROM users WHERE username = '$username'")[0];
+                    $id = $user['id'];
+                    mysqli_query($conn, "INSERT INTO `dosen`(`id`, `id_user`, `nik`) VALUES ('','$id','$username')");
+                    $_SESSION["login"] = true;
+                    $_SESSION["nik"] = $row["username"];
+                    $_SESSION["level"] = $row["level"];
+                    header("Location: detail_dosen.php");
+                    exit;
+                }
+            }
+            exit;
+        }
+    }
+    $error = true;
 }
 
 ?>

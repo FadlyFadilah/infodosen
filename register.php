@@ -85,7 +85,10 @@ if( isset($_POST["registrasi"]) ) {
                 </div>
                 <div class="d-flex justify-content-between">
                     <div class="col-xs-6">
-                        <button type="submit" name="registrasi" class="btn btn-primary pull-right">Daftra <i class="fas fa-sign-in-alt"></i></button>
+                        <button type="submit" name="registrasi" class="btn btn-primary pull-right">Daftar <i class="fas fa-sign-in-alt"></i></button>
+                    </div>
+                    <div class="col-xs-6">
+                        <a href="login.php">Sudah Punya akun!</a>
                     </div>
                 </div>
             </form>

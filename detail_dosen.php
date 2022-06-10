@@ -1,27 +1,63 @@
 <?php
+session_start();
+if (!isset($_SESSION["login"])) {
+	header("Location: login.php");
+	exit;
+}
 
 require 'pages/fungsi.php';
-$id = $_GET["id"];
-$dosen = query("SELECT * from dosen WHERE id = $id")[0];
-if (isset($_POST["updateBio"])) {
+if ($_SESSION["level"] === "admin") {
+	$id = $_GET["id"];
+	$dosen = query("SELECT * FROM `dosen` WHERE `id` = '$id'")[0];
 
-    // cek apakah data berhasil di tambahkan atau tidak
-    if (ubahBio($_POST) > 0) {
-        echo "
+
+	if (isset($_POST["updateBio"])) {
+
+		// cek apakah data berhasil di tambahkan atau tidak
+		if (ubahBio($_POST) > 0) {
+			echo "
             <script>
                 alert('data berhasil diubah!');
-                dwindow.location.href = 'http://localhost/infodosen/detail_dosen.php?$id';
+                window.location.href = 'http://localhost/infodosen/detail_dosen.php?id=$id';
             </script>
         ";
-    } else {
-        echo "
+		} else {
+			echo "
             <script>
                 alert('data gagal diubah!');
                 document.location.href = 'detail_dosen.php';
             </script>
         ";
-    }
+		}
+	}
+} else {
+
+
+	$idn = $_SESSION["nik"];
+	$dosen = query("SELECT * FROM `dosen` WHERE `nik` = '$idn'")[0];
+
+
+	if (isset($_POST["updateBio"])) {
+
+		// cek apakah data berhasil di tambahkan atau tidak
+		if (ubahBio($_POST) > 0) {
+			echo "
+            <script>
+                alert('data berhasil diubah!');
+                window.location.href = 'detail_dosen.php';
+            </script>
+        ";
+		} else {
+			echo "
+            <script>
+                alert('data gagal diubah!');
+                document.location.href = 'detail_dosen.php';
+            </script>
+        ";
+		}
+	}
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,10 +80,12 @@ if (isset($_POST["updateBio"])) {
 						</div><!-- /.col -->
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
-								<li>
-									<a href="index.php"><button type="button" class="btn btn-success"><i class="fa fa-fw fa-angle-double-left"></i>
-											Kembali ke Daftar</button></a>
-								</li>
+								<?php if ($_SESSION['level'] === 'admin') { ?>
+									<li>
+										<a href="index.php"><button type="button" class="btn btn-success"><i class="fa fa-fw fa-angle-double-left"></i>
+												Kembali ke Daftar</button></a>
+									</li>
+								<?php } ?>
 							</ol>
 						</div>
 					</div>
@@ -157,7 +195,7 @@ if (isset($_POST["updateBio"])) {
 														</div>
 														<div class="form-group">
 															<label for="nidn">NIDN</label>
-															<input type="text" value="<?= $dosen['nidn']; ?>" class="form-control" id="nidn" placeholder="NIDN" disabled>
+															<input type="text" value="<?= $dosen['nidn']; ?>" class="form-control" id="nidn" placeholder="NIDN">
 														</div>
 														<div class="form-group">
 															<label for="nama">Nama Lengkap</label>
@@ -193,7 +231,7 @@ if (isset($_POST["updateBio"])) {
 														</div>
 														<div class="form-group">
 															<label for="sertipen">Sertifikat Pendidikan</label>
-															<input type="file" name="sertipen"  class="form-control" id="sertipen" placeholder="Masukan Sertifikat Pendidikan">
+															<input type="file" name="sertipen" class="form-control" id="sertipen" placeholder="Masukan Sertifikat Pendidikan">
 															<a href="file/biodosen/<?= $dosen['sertipedik']; ?>" class="btn btn-link"><?= $dosen['sertipedik']; ?></a>
 														</div>
 														<div class="form-group">
@@ -208,13 +246,30 @@ if (isset($_POST["updateBio"])) {
 
 										<div class="tab-pane fade show" id="rekognisi-tab" role="tabpanel" aria-labelledby="custom-tabs-one-rekognisi-tab">
 											<div class="card">
-												<div class="card-header">
-													Rekognisi
+												<div class="card-header d-flex justify-content-between">
+													<div>
+														Regoknisi
+													</div>
+													<div>
+														<!-- Tambah dosen tombol modal -->
+														<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRekognisi">
+															Tambah Rekognisi
+														</button>
+
+													</div>
 												</div>
-												<div class="card-body">
-													<h5 class="card-title">Special title treatment</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-primary">Go somewhere</a>
+												<div class="card-body table-responsive">
+													<table id="rekognisi" class="table table-bordered table-striped table-hover">
+														<thead>
+															<tr>
+																<th class="text-center">Rekognisi</th>
+																<th class="text-center">Wilayah</th>
+																<th class="text-center">Aksi</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -277,7 +332,103 @@ if (isset($_POST["updateBio"])) {
 
 						<!-- jQuery -->
 						<script src="plugins/jquery/jquery.min.js"></script>
+						<script src="dist/rekognisi.js"></script>
 						<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+						<script type="text/javascript">
+							
+						</script>
+						<div class="modal fade" id="modalRekognisi" tabindex="-1" role="dialog" aria-labelledby="modalRekognisi" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="modalRekognisi">Tambah Rekognisi</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="addrekog" action="" autocomplete="off">
+											<?php if ($_SESSION["level"] === "dosen") { ?>
+												<input type="hidden" id="nik" name="nik" value="<?= $idn; ?>">
+											<?php } ?>
+											<?php if ($_SESSION["level"] === "admin") { ?>
+												<input type="hidden" id="nik" name="nik" value="<?= $dosen['nik']; ?>">
+											<?php } ?>
+											<div class="mb-3 row">
+												<label for="rekognisis" class="col-md-3 form-label">Rekognisi</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="rekognisis" name="rekognisis">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tingkat" class="col-md-3 form-label">Tingkat</label>
+												<div class="col-md-9">
+													<select type="text" class="form-control" id="tingkat" name="tingkat">
+														<option value="">-- Pilih! --</option>
+														<option value="wilayah">Wilayah</option>
+														<option value="nasional">Nasional</option>
+														<option value="internasional">Internasional</option>
+													</select>
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="editModalRekog" tabindex="-1" role="dialog" aria-labelledby="editModalRekog" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="editModalRekog">Edit Rekognisi</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="updaterekognisi" action="" autocomplete="off">
+											<input type="hidden" name="id" id="id_" value="">
+											<input type="hidden" name="trid" id="trid" value="">
+											<?php if ($_SESSION["level"] === "dosen") { ?>
+												<input type="hidden" id="nik_" name="nik" value="">
+											<?php } ?>
+											<?php if ($_SESSION["level"] === "admin") { ?>
+												<input type="hidden" id="nik_" name="nik" value="">
+											<?php } ?>
+											<div class="mb-3 row">
+												<label for="rekognisis" class="col-md-3 form-label">Rekognisi</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="rekognisis_" name="rekognisis">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tingkat" class="col-md-3 form-label">Tingkat</label>
+												<div class="col-md-9">
+													<select type="text" class="form-control" id="tingkat_" name="tingkat">
+														<option value="">-- Pilih! --</option>
+														<option value="wilayah">Wilayah</option>
+														<option value="nasional">Nasional</option>
+														<option value="internasional">Internasional</option>
+													</select>
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

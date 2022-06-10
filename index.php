@@ -1,3 +1,11 @@
+<?php
+session_start();
+if( !isset($_SESSION["login"]) ) {
+	header("Location: login.php");
+	exit;
+}
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -65,7 +73,6 @@
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDosen">
                                             Tambah Dosen
                                         </button>
-
 
                                     </div>
                                 </div>
@@ -240,10 +247,7 @@
                             var json = JSON.parse(data);
                             status = json.status;
                             if (status == 'success') {
-                                // table.fnDeleteRow( table.$('#' + nik)[0] );
-                                // $("#dosen tbody").find(nik).remove();
-                                // table.row($(this).closest("tr")) .remove();
-                                $("#" + nik).closest('tr').remove();
+                                location.reload();
                             } else {
                                 alert('Failed');
                                 return;
