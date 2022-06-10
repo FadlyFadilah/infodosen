@@ -276,13 +276,33 @@ if ($_SESSION["level"] === "admin") {
 
 										<div class="tab-pane fade show" id="studi-tab" role="tabpanel" aria-labelledby="custom-tabs-one-studi-tab">
 											<div class="card">
-												<div class="card-header">
-													Data Studi Lanjut
+												<div class="card-header d-flex justify-content-between">
+													<div>
+														Study Lanjut
+													</div>
+													<div>
+														<!-- Tambah dosen tombol modal -->
+														<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalStudy">
+															Tambah Study Lanjut
+														</button>
+
+													</div>
 												</div>
-												<div class="card-body">
-													<h5 class="card-title">Special title treatment</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-													<a href="#" class="btn btn-primary">Go somewhere</a>
+												<div class="card-body table-responsive">
+													<table id="study" class="table table-bordered table-striped table-hover">
+														<thead>
+															<tr>
+																<th class="text-center">Pendidikan Lanjut</th>
+																<th class="text-center">Bidang Study</th>
+																<th class="text-center">Universitas</th>
+																<th class="text-center">Neraga</th>
+																<th class="text-center">Tahun Mulai Study</th>
+																<th class="text-center">Aksi</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -294,7 +314,8 @@ if ($_SESSION["level"] === "admin") {
 												</div>
 												<div class="card-body">
 													<h5 class="card-title">Special title treatment</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+													<p class="card-text">With supporting text below as a natural lead-in
+														to additional content.</p>
 													<a href="#" class="btn btn-primary">Go somewhere</a>
 												</div>
 											</div>
@@ -307,7 +328,8 @@ if ($_SESSION["level"] === "admin") {
 												</div>
 												<div class="card-body">
 													<h5 class="card-title">Special title treatment</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+													<p class="card-text">With supporting text below as a natural lead-in
+														to additional content.</p>
 													<a href="#" class="btn btn-primary">Go somewhere</a>
 												</div>
 											</div>
@@ -320,7 +342,8 @@ if ($_SESSION["level"] === "admin") {
 												</div>
 												<div class="card-body">
 													<h5 class="card-title">Special title treatment</h5>
-													<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+													<p class="card-text">With supporting text below as a natural lead-in
+														to additional content.</p>
 													<a href="#" class="btn btn-primary">Go somewhere</a>
 												</div>
 											</div>
@@ -335,7 +358,104 @@ if ($_SESSION["level"] === "admin") {
 						<script src="dist/rekognisi.js"></script>
 						<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 						<script type="text/javascript">
-							
+							$(document).ready(function() {
+								$('#study').DataTable({
+									"fnCreatedRow": function(nRow, aData, iDataIndex) {
+										$(nRow).attr('id', aData[0]);
+									},
+									'serverSide': 'true',
+									'processing': 'true',
+									'paging': 'true',
+									'order': [],
+									'ajax': {
+										'url': 'pages/data_study.php',
+										'type': 'post',
+									},
+									"aoColumnDefs": [{
+											"bSortable": false,
+											"aTargets": [5]
+										},
+
+									],
+									'columnDefs': [{
+											"targets": [0, 1],
+											"className": "text-center",
+											"width": "1%"
+										}, {
+											"targets": [4, 5],
+											"className": "text-left",
+											"width": "5%"
+										},
+										{
+											"targets": [2, 3],
+											"className": "text-left",
+											"width": "10d%"
+										}
+									]
+								});
+							});
+							$(document).on('submit', '#addStudy', function(e) {
+								e.preventDefault();
+								var nik = $('#nikS').val();
+								var pendiklanjut = $('#pendiklanjut').val();
+								var bidstudy = $('#bidstudy').val();
+								var univ = $('#univ').val();
+								var negara = $('#negara').val();
+								var tahunS = $('#tahunS').val();
+								if (pendiklanjut != '' && bidstudy != '' && nik != '' && univ != '' && negara != '' && negara != '') {
+									$.ajax({
+										url: "pages/add_study.php",
+										type: "post",
+										data: {
+											nik: nik,
+											pendiklanjut: pendiklanjut,
+											bidstudy: bidstudy,
+											univ: univ,
+											negara: negara,
+											tahunS: tahunS,
+										},
+										success: function(data) {
+											var json = JSON.parse(data);
+											var status = json.status;
+											if (status == 'true') {
+												mytable = $('#study').DataTable();
+												mytable.draw();
+												$('#modalStudy').modal('hide');
+											} else {
+												alert('failed');
+											}
+										}
+									});
+								} else {
+									alert('Fill all the required fields');
+								}
+							});
+							$('#study').on('click', '.editbtnS ', function(event) {
+								var table = $('#study').DataTable();
+								var trid = $(this).closest('tr').attr('id');
+								// console.log(selectedRow);
+								var id = $(this).data('id');
+								$('#editModalStudy').modal('show');
+
+								$.ajax({
+									url: "pages/get_single_rekognisi.php",
+									data: {
+										id: id
+									},
+									type: 'post',
+									success: function(data) {
+										var json = JSON.parse(data);
+										$('#nikS_').val(json.nik);
+										$('#pendiklanjut_').val(json.pendiklanjut);
+										$('#bidstudy_').val(json.bidangstudy);
+										$('#univ_').val(json.univ);
+										$('#negara_').val(json.negara);
+										$('#tahunS_').val(json.tahunmunaistudy);
+										$('#id_').val(id);
+										$('#tridS').val(trid);
+									}
+								})
+							});
 						</script>
 						<div class="modal fade" id="modalRekognisi" tabindex="-1" role="dialog" aria-labelledby="modalRekognisi" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered" role="document">
@@ -416,6 +536,124 @@ if ($_SESSION["level"] === "admin") {
 														<option value="nasional">Nasional</option>
 														<option value="internasional">Internasional</option>
 													</select>
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="modalStudy" tabindex="-1" role="dialog" aria-labelledby="modalStudy" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="modalStudy">Tambah Study Lanjut</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="addStudy" action="" autocomplete="off">
+											<?php if ($_SESSION["level"] === "dosen") { ?>
+												<input type="hidden" id="nikS" name="nik" value="<?= $idn; ?>">
+											<?php } ?>
+											<?php if ($_SESSION["level"] === "admin") { ?>
+												<input type="hidden" id="nikS" name="nik" value="<?= $dosen['nik']; ?>">
+											<?php } ?>
+											<div class="mb-3 row">
+												<label for="pendiklanjut" class="col-md-3 form-label">Pendidikan Lanjut</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="pendiklanjut" name="pendiklanjut">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="bidstudy" class="col-md-3 form-label">Bidang Study</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="bidstudy" name="bidstudy">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="univ" class="col-md-3 form-label">Universitas</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="univ" name="univ">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="negara" class="col-md-3 form-label">Neraga</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="negara" name="negara">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tahunS" class="col-md-3 form-label">Tahun Mulai Study</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunS" name="tahunS">
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="editModalStudy" tabindex="-1" role="dialog" aria-labelledby="editModalStudy" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="editModalStudy">Tambah Study Lanjut</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="addStudy" action="" autocomplete="off">
+											<input type="hidden" name="id" id="idS_" value="">
+											<input type="hidden" name="trid" id="tridS" value="">
+											<?php if ($_SESSION["level"] === "dosen") { ?>
+												<input type="hidden" id="nikS_" name="nik" value="<?= $idn; ?>">
+											<?php } ?>
+											<?php if ($_SESSION["level"] === "admin") { ?>
+												<input type="hidden" id="nikS_" name="nik" value="<?= $dosen['nik']; ?>">
+											<?php } ?>
+											<div class="mb-3 row">
+												<label for="pendiklanjut" class="col-md-3 form-label">Pendidikan Lanjut</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="pendiklanjut_" name="pendiklanjut">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="bidstudy" class="col-md-3 form-label">Bidang Study</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="bidstudy_" name="bidstudy">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="univ" class="col-md-3 form-label">Universitas</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="univ_" name="univ">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="negara" class="col-md-3 form-label">Neraga</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="negara_" name="negara">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tahunS" class="col-md-3 form-label">Tahun Mulai Study</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunS_" name="tahunS">
 												</div>
 											</div>
 											<div class="text-center">
