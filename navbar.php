@@ -60,47 +60,6 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item has-treeview ">
-                            <a href="#" class="nav-link "><i class="nav-icon fas fa-list"></i>
-                                <p>Rekapitulasi</p><i class="right fas fa-angle-left"></i>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item"><a href="#"
-                                        class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
-                                        <p>Program Studi</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="#"
-                                        class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
-                                        <p>Aktivasi</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="#"
-                                        class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
-                                        <p>Mata Kuliah</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="#"
-                                        class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
-                                        <p>Perwalian</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="#"
-                                        class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
-                                        <p>Dosen Wali</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="#"
-                                        class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
-                                        <p>Nilai</p>
-                                    </a></li>
-                                <li class="nav-item"><a href="#"
-                                        class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
-                                        <p>Mahasiswa Tanpa Kelas</p>
-                                    </a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link "><i
-                                    class="nav-icon fas fa-print"></i>
-                                <p>Cetak</p>
-                            </a>
-                        </li>
                         <li class="nav-header">AKUN</li>
                         <li class="nav-item">
                             <a href="logout.php" class="nav-link"><i class="nav-icon fas fa-power-off"></i>

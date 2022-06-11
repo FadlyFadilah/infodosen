@@ -38,6 +38,50 @@ function registrasi($data) {
 
 }
 
+function dosencsv()
+{
+    global $conn;
+    $namaFile = $_FILES['file']['name'];
+    $ukuranFile = $_FILES['file']['size'];
+    $error = $_FILES['file']['error'];
+    $tmpName = $_FILES['file']['tmp_name'];
+
+    // cek apakah tidak ada file yang diupload
+    if ($error === 4) {
+        return null;
+    }
+
+    // cek apakah yang diupload adalah gambar
+    $ekstensiFileValid = ['csv'];
+    $ekstensiFile = explode('.', $namaFile);
+    $ekstensiFile = strtolower(end($ekstensiFile));
+    if (!in_array($ekstensiFile, $ekstensiFileValid)) {
+        echo "<script>
+                alert('yang anda upload bukan file CSV!');
+            </script>";
+        return false;
+    }
+
+    // cek jika ukurannya terlalu besar
+    if ($ukuranFile > 5242880) {
+        echo "<script>
+                alert('ukuran file terlalu besar!');
+            </script>";
+        return false;
+    }
+
+    $handle = fopen($tmpName, "r"); //Membuka file dan membacanya
+
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $query = "INSERT into dosen (id, nik, nidn, nama_lengkap, matkul)
+                     values
+                    (NULL, '$data[0]', '$data[1]', '$data[2]', '$data[3]')"; //data array sesuaikan dengan jumlah kolom pada CSV anda mulai dari “0” bukan “1”
+        mysqli_query($conn, $query); //Melakukan Import
+    }
+
+
+    return mysqli_affected_rows($conn);
+}
 
 
 function uploadbio() {

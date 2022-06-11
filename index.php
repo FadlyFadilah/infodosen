@@ -1,10 +1,21 @@
 <?php
 session_start();
-if( !isset($_SESSION["login"]) ) {
-	header("Location: login.php");
-	exit;
+if (!isset($_SESSION["login"])) {
+    header("Location: login.php");
+    exit;
 }
+require 'pages/fungsi.php';
+if (isset($_POST["doseni"])) {
 
+    if (dosencsv($_POST) > 0) {
+        echo "<script>
+                alert('berhasil ditambahkan!');
+                document.location.href = 'index.php';
+              </script>";
+    } else {
+        echo mysqli_error($conn);
+    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,15 +39,14 @@ if( !isset($_SESSION["login"]) ) {
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li>
-                                    <form action="pages/proses_import.php?e9895ca083059bce5e7911e658109fb4" method="post" enctype="multipart/form-data" id="formImport">
+                                    <form action="" method="post" enctype="multipart/form-data" id="formImport">
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name="file" id="file" accept=".xls" required>
-                                                <label class="custom-file-label" for="exampleInputFile">Pilih
-                                                    berkas</label>
+                                                <input type="file" name="file" class="form-control-file" id="exampleInputFile">
+
                                             </div>
                                             <div class="input-group-append">
-                                                <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-file-import"></i> Import Dosen</button>
+                                                <button type="submit" name="doseni" class="btn btn-success"><i class="fa fa-fw fa-file-import"></i> Import Dosen</button>
                                             </div>
                                         </div>
                                     </form>
@@ -60,7 +70,7 @@ if( !isset($_SESSION["login"]) ) {
                                             <span class="sr-only">Toggle Dropdown</span>
                                             <div class="dropdown-menu" role="menu">
 
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick='export_maba();'>Daftar Mahasiswa Baru (Statistika)</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick='ex_rekog();'>Daftar Rekognisi</a>
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick='export_mhs_aktif();'>Daftar Mahasiswa Aktif
                                                     (Statistika)</a>
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick='export_perwalian_maba();'>Perwalian Mahasiswa Baru
@@ -195,7 +205,7 @@ if( !isset($_SESSION["login"]) ) {
                                 table = $('#dosen').DataTable();
                                 var button = '<td><div class="d-flex"><a href="javascript:void();" data-id="' + id + '" class="btn btn-info btn-sm editbtn">Edit</a>  <a href="#!"  data-id="' + id + '"  class="btn btn-danger btn-sm deleteBtn">Delete</a></div></td>';
                                 var row = table.row("[id='" + trid + "']");
-                                row.row("[id='" + trid + "']").data([ nik, nidn, nama, matkul, button]);
+                                row.row("[id='" + trid + "']").data([nik, nidn, nama, matkul, button]);
                                 $('#editModalDosen').modal('hide');
                             } else {
                                 alert('failed');
@@ -258,6 +268,13 @@ if( !isset($_SESSION["login"]) ) {
                     return null;
                 }
             });
+
+            function ex_rekog() {
+                var url = "pages/ex_rekog.php";
+
+                window.open(url, '_blank', 'status=no');
+                return false;
+            }
         </script>
         <!-- Modal tambah dosen -->
         <div class="modal fade" id="editModalDosen" tabindex="-1" role="dialog" aria-labelledby="editModalDosen" aria-hidden="true">

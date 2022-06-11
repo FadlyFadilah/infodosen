@@ -337,14 +337,33 @@ if ($_SESSION["level"] === "admin") {
 
 										<div class="tab-pane fade show" id="kompetensi-tab" role="tabpanel" aria-labelledby="custom-tabs-one-kompetensi-tab">
 											<div class="card">
-												<div class="card-header">
-													Data Peningkatan Kopetensi
+												<div class="card-header d-flex justify-content-between">
+													<div>
+														Kompetensi
+													</div>
+													<div>
+														<!-- Tambah dosen tombol modal -->
+														<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalKom">
+															Tambah Kompetensi
+														</button>
+
+													</div>
 												</div>
-												<div class="card-body">
-													<h5 class="card-title">Special title treatment</h5>
-													<p class="card-text">With supporting text below as a natural lead-in
-														to additional content.</p>
-													<a href="#" class="btn btn-primary">Go somewhere</a>
+												<div class="card-body table-responsive">
+													<table id="kom" class="table table-bordered table-striped table-hover">
+														<thead>
+															<tr>
+																<th class="text-center">Kegiatan</th>
+																<th class="text-center">Tempat</th>
+																<th class="text-center">Waktu</th>
+																<th class="text-center">Sebagai</th>
+																<th class="text-center">Tingkat</th>
+																<th class="text-center">Aksi</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -357,10 +376,9 @@ if ($_SESSION["level"] === "admin") {
 						<script src="plugins/jquery/jquery.min.js"></script>
 						<script src="dist/rekognisi.js"></script>
 						<script src="dist/study.js"></script>
+						<script src="dist/kom.js"></script>
 						<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-						<script type="text/javascript">
-							
-						</script>
+
 						<div class="modal fade" id="modalRekognisi" tabindex="-1" role="dialog" aria-labelledby="modalRekognisi" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content">
@@ -558,6 +576,142 @@ if ($_SESSION["level"] === "admin") {
 												<label for="tahunS" class="col-md-3 form-label">Tahun Mulai Study</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="tahunS_" name="tahunS">
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="modalKom" tabindex="-1" role="dialog" aria-labelledby="modalKom" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="modalKom">Tambah Kompetesi</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="addKom" action="" autocomplete="off">
+											<?php if ($_SESSION["level"] === "dosen") { ?>
+												<input type="hidden" id="nikK" name="nik" value="<?= $idn; ?>">
+											<?php } ?>
+											<?php if ($_SESSION["level"] === "admin") { ?>
+												<input type="hidden" id="nikK" name="nik" value="<?= $dosen['nik']; ?>">
+											<?php } ?>
+											<div class="mb-3 row">
+												<label for="kegiatan" class="col-md-3 form-label">Kegiatan</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="kegiatan" name="kegiatan">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tempatK" class="col-md-3 form-label">Tempat</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tempatK" name="tempatK">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="waktuK" class="col-md-3 form-label">Waktu</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="waktuK" name="waktuK">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="sebagai" class="col-md-3 form-label">Sebagai</label>
+												<div class="col-md-9">
+													<select type="text" class="form-control" id="sebagai" name="sebagai">
+														<option value="">-- Pilih! --</option>
+														<option value="penyaji">Penyaji</option>
+														<option value="peserta">Peserta</option>
+													</select>
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tingkatK" class="col-md-3 form-label">Tingkat</label>
+												<div class="col-md-9">
+													<select type="text" class="form-control" id="tingkatK" name="tingkatK">
+														<option value="">-- Pilih! --</option>
+														<option value="wilayah">Wilayah</option>
+														<option value="nasional">Nasional</option>
+														<option value="internasional">Internasional</option>
+													</select>
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="editKom" tabindex="-1" role="dialog" aria-labelledby="editKom" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="editKom">Tambah Kompetesi</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="updateKom" action="" autocomplete="off">
+											<input type="hidden" name="id" id="idK_" value="">
+											<input type="hidden" name="trid" id="tridK" value="">
+											<?php if ($_SESSION["level"] === "dosen") { ?>
+												<input type="hidden" id="nikK_" name="nik" value="<?= $idn; ?>">
+											<?php } ?>
+											<?php if ($_SESSION["level"] === "admin") { ?>
+												<input type="hidden" id="nikK_" name="nik" value="<?= $dosen['nik']; ?>">
+											<?php } ?>
+											<div class="mb-3 row">
+												<label for="kegiatan" class="col-md-3 form-label">Kegiatan</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="kegiatan_" name="kegiatan">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tempatK" class="col-md-3 form-label">Tempat</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tempatK_" name="tempatK">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="waktuK" class="col-md-3 form-label">Waktu</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="waktuK_" name="waktuK">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="sebagai" class="col-md-3 form-label">Sebagai</label>
+												<div class="col-md-9">
+													<select type="text" class="form-control" id="sebagai_" name="sebagai">
+														<option value="">-- Pilih! --</option>
+														<option value="penyaji">Penyaji</option>
+														<option value="peserta">Peserta</option>
+													</select>
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tingkatK" class="col-md-3 form-label">Tingkat</label>
+												<div class="col-md-9">
+													<select type="text" class="form-control" id="tingkatK_" name="tingkatK">
+														<option value="">-- Pilih! --</option>
+														<option value="wilayah">Wilayah</option>
+														<option value="nasional">Nasional</option>
+														<option value="internasional">Internasional</option>
+													</select>
 												</div>
 											</div>
 											<div class="text-center">
