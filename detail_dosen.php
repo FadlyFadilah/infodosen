@@ -356,106 +356,10 @@ if ($_SESSION["level"] === "admin") {
 						<!-- jQuery -->
 						<script src="plugins/jquery/jquery.min.js"></script>
 						<script src="dist/rekognisi.js"></script>
+						<script src="dist/study.js"></script>
 						<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 						<script type="text/javascript">
-							$(document).ready(function() {
-								$('#study').DataTable({
-									"fnCreatedRow": function(nRow, aData, iDataIndex) {
-										$(nRow).attr('id', aData[0]);
-									},
-									'serverSide': 'true',
-									'processing': 'true',
-									'paging': 'true',
-									'order': [],
-									'ajax': {
-										'url': 'pages/data_study.php',
-										'type': 'post',
-									},
-									"aoColumnDefs": [{
-											"bSortable": false,
-											"aTargets": [5]
-										},
-
-									],
-									'columnDefs': [{
-											"targets": [0, 1],
-											"className": "text-center",
-											"width": "1%"
-										}, {
-											"targets": [4, 5],
-											"className": "text-left",
-											"width": "5%"
-										},
-										{
-											"targets": [2, 3],
-											"className": "text-left",
-											"width": "10d%"
-										}
-									]
-								});
-							});
-							$(document).on('submit', '#addStudy', function(e) {
-								e.preventDefault();
-								var nik = $('#nikS').val();
-								var pendiklanjut = $('#pendiklanjut').val();
-								var bidstudy = $('#bidstudy').val();
-								var univ = $('#univ').val();
-								var negara = $('#negara').val();
-								var tahunS = $('#tahunS').val();
-								if (pendiklanjut != '' && bidstudy != '' && nik != '' && univ != '' && negara != '' && negara != '') {
-									$.ajax({
-										url: "pages/add_study.php",
-										type: "post",
-										data: {
-											nik: nik,
-											pendiklanjut: pendiklanjut,
-											bidstudy: bidstudy,
-											univ: univ,
-											negara: negara,
-											tahunS: tahunS,
-										},
-										success: function(data) {
-											var json = JSON.parse(data);
-											var status = json.status;
-											if (status == 'true') {
-												mytable = $('#study').DataTable();
-												mytable.draw();
-												$('#modalStudy').modal('hide');
-											} else {
-												alert('failed');
-											}
-										}
-									});
-								} else {
-									alert('Fill all the required fields');
-								}
-							});
-							$('#study').on('click', '.editbtnS ', function(event) {
-								var table = $('#study').DataTable();
-								var trid = $(this).closest('tr').attr('id');
-								// console.log(selectedRow);
-								var id = $(this).data('id');
-								$('#editModalStudy').modal('show');
-
-								$.ajax({
-									url: "pages/get_single_rekognisi.php",
-									data: {
-										id: id
-									},
-									type: 'post',
-									success: function(data) {
-										var json = JSON.parse(data);
-										$('#nikS_').val(json.nik);
-										$('#pendiklanjut_').val(json.pendiklanjut);
-										$('#bidstudy_').val(json.bidangstudy);
-										$('#univ_').val(json.univ);
-										$('#negara_').val(json.negara);
-										$('#tahunS_').val(json.tahunmunaistudy);
-										$('#id_').val(id);
-										$('#tridS').val(trid);
-									}
-								})
-							});
+							
 						</script>
 						<div class="modal fade" id="modalRekognisi" tabindex="-1" role="dialog" aria-labelledby="modalRekognisi" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered" role="document">
@@ -617,7 +521,7 @@ if ($_SESSION["level"] === "admin") {
 										</button>
 									</div>
 									<div class="modal-body">
-										<form id="addStudy" action="" autocomplete="off">
+										<form id="updateStudy" action="" autocomplete="off">
 											<input type="hidden" name="id" id="idS_" value="">
 											<input type="hidden" name="trid" id="tridS" value="">
 											<?php if ($_SESSION["level"] === "dosen") { ?>
