@@ -43,7 +43,7 @@ if (isset($_POST["login"])) {
                 } else {
                     $user = query("SELECT * FROM users WHERE username = '$username'")[0];
                     $id = $user['id'];
-                    mysqli_query($conn, "INSERT INTO `dosen`(`id`, `id_user`, `nik`) VALUES ('','$id','$username')");
+                    mysqli_query($conn, "INSERT INTO `dosen`(`id`, `nik`) VALUES ('','$username')");
                     $_SESSION["login"] = true;
                     $_SESSION["nik"] = $row["username"];
                     $_SESSION["level"] = $row["level"];

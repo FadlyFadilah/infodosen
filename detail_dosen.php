@@ -7,8 +7,8 @@ if (!isset($_SESSION["login"])) {
 
 require 'pages/fungsi.php';
 if ($_SESSION["level"] === "admin") {
-	$id = $_GET["id"];
-	$dosen = query("SELECT * FROM `dosen` WHERE `id` = '$id'")[0];
+	$nik = $_GET["nik"];
+	$dosen = query("SELECT * FROM `dosen` WHERE `nik` = '$nik'")[0];
 
 
 	if (isset($_POST["updateBio"])) {

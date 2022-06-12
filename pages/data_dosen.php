@@ -49,7 +49,7 @@ while($row = mysqli_fetch_assoc($query))
 	$sub_array = array();
 	$sub_array[] = $row['nik'];
 	$sub_array[] = $row['nidn'];
-	$sub_array[] = '<a href="detail_dosen.php?id='.$row['id'].'" class="btn btn-link btn-sm" >'.$row['nama_lengkap'].'</a>';
+	$sub_array[] = '<a href="detail_dosen.php?nik='.$row['nik'].'" class="btn btn-link btn-sm" >'.$row['nama_lengkap'].'</a>';
 	$sub_array[] = $row['matkul'];
 	$sub_array[] = '<div class="d-flex"><a href="javascript:" data-id="'.$row['id'].'"  class="btn btn-info btn-sm editbtn" >Edit</a>  <a href="javascript:" data-id="'.$row['id'].'"  class="btn btn-danger btn-sm deleteBtn" >Delete</a></div>';
 	$data[] = $sub_array;

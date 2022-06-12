@@ -38,12 +38,12 @@ else
 	$sql .= " ORDER BY id desc";
 }
 
-if($_POST['length'] != -1)
-{
-	$start = $_POST['start'];
-	$length = $_POST['length'];
-	$sql .= " LIMIT  ".$start.", ".$length;
-}	
+// if($_POST['length'] != -1)
+// {
+// 	$start = $_POST['start'];
+// 	$length = $_POST['length'];
+// 	$sql .= " LIMIT  ".$start.", ".$length;
+// }	
 
 $query = mysqli_query($conn,$sql);
 $count_rows = mysqli_num_rows($query);

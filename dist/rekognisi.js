@@ -1,6 +1,7 @@
-$(document).ready(function() {
+
+$(document).ready(function () {
     $('#rekognisi').DataTable({
-        "fnCreatedRow": function(nRow, aData, iDataIndex) {
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
             $(nRow).attr('id', aData[0]);
         },
         'serverSide': 'true',
@@ -12,25 +13,25 @@ $(document).ready(function() {
             'type': 'post',
         },
         "aoColumnDefs": [{
-                "bSortable": false,
-                "aTargets": [2]
-            },
+            "bSortable": false,
+            "aTargets": [2]
+        },
 
         ],
         'columnDefs': [{
-                "targets": [1, 2],
-                "className": "text-center",
-                "width": "1%"
-            },
-            {
-                "targets": [0],
-                "className": "text-left",
-                "width": "10d%"
-            }
+            "targets": [1, 2],
+            "className": "text-center",
+            "width": "1%"
+        },
+        {
+            "targets": [0],
+            "className": "text-left",
+            "width": "10d%"
+        }
         ]
     });
 });
-$(document).on('submit', '#addrekog', function(e) {
+$(document).on('submit', '#addrekog', function (e) {
     e.preventDefault();
     var nik = $('#nik').val();
     var rekognisi = $('#rekognisis').val();
@@ -44,7 +45,7 @@ $(document).on('submit', '#addrekog', function(e) {
                 rekognisi: rekognisi,
                 tingkat: tingkat,
             },
-            success: function(data) {
+            success: function (data) {
                 var json = JSON.parse(data);
                 var status = json.status;
                 if (status == 'true') {
@@ -60,7 +61,7 @@ $(document).on('submit', '#addrekog', function(e) {
         alert('Fill all the required fields');
     }
 });
-$(document).on('submit', '#updaterekognisi', function(e) {
+$(document).on('submit', '#updaterekognisi', function (e) {
     e.preventDefault();
     //var tr = $(this).closest('tr');
     var nik = $('#nik_').val();
@@ -78,7 +79,7 @@ $(document).on('submit', '#updaterekognisi', function(e) {
                 tingkat: tingkat,
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 var json = JSON.parse(data);
                 var status = json.status;
                 if (status == 'true') {
@@ -96,7 +97,7 @@ $(document).on('submit', '#updaterekognisi', function(e) {
         alert('Fill all the required fields');
     }
 });
-$('#rekognisi').on('click', '.editbtn ', function(event) {
+$('#rekognisi').on('click', '.editbtn ', function (event) {
     var table = $('#rekognisi').DataTable();
     var trid = $(this).closest('tr').attr('id');
     // console.log(selectedRow);
@@ -109,7 +110,7 @@ $('#rekognisi').on('click', '.editbtn ', function(event) {
             id: id
         },
         type: 'post',
-        success: function(data) {
+        success: function (data) {
             var json = JSON.parse(data);
             $('#nik_').val(json.nik);
             $('#rekognisis_').val(json.rekognisi);
@@ -119,7 +120,7 @@ $('#rekognisi').on('click', '.editbtn ', function(event) {
         }
     })
 });
-$(document).on('click', '.deleteBtn', function(event) {
+$(document).on('click', '.deleteBtn', function (event) {
     var table = $('#rekognisi').DataTable();
     event.preventDefault();
     var id = $(this).data('id');
@@ -132,7 +133,7 @@ $(document).on('click', '.deleteBtn', function(event) {
                 nik: nik
             },
             type: "post",
-            success: function(data) {
+            success: function (data) {
                 var json = JSON.parse(data);
                 status = json.status;
                 if (status == 'success') {
