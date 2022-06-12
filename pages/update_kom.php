@@ -6,9 +6,10 @@ $tempat = $_POST['tempat'];
 $waktu = $_POST['waktu'];
 $sebagai = $_POST['sebagai'];
 $tingkat = $_POST['tingkat'];
+$tahunaka = $_POST['tahunaka'];
 $id = $_POST['id'];
 
-$sql = "UPDATE `kopetensi` SET `nik`='$nik',`kegiatan`='$kegiatan',`tempat`='$tempat',`waktu`='$waktu',`sebagai`='$sebagai',`tingkat`='$tingkat' WHERE `id`='$id'";
+$sql = "UPDATE `kopetensi` SET `nik`='$nik',`kegiatan`='$kegiatan',`tempat`='$tempat',`waktu`='$waktu',`sebagai`='$sebagai',`tingkat`='$tingkat', `tahunaka` = '$tahunaka' WHERE `id`='$id'";
 $query= mysqli_query($conn,$sql);
 $lastId = mysqli_insert_id($conn);
 if($query ==true)

@@ -93,7 +93,7 @@ if (isset($_POST["doseni"])) {
                                                 <th class="text-center">NIK</th>
                                                 <th class="text-center">NIDN</th>
                                                 <th class="text-center">Nama</th>
-                                                <th class="text-center">Mata Kuliah yang di Ampu</th>
+                                                <th class="text-center">Tetap/Tidak Tetap</th>
                                                 <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>

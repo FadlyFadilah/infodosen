@@ -6,8 +6,9 @@ $bidstudy = $_POST['bidstudy'];
 $univ = $_POST['univ'];
 $negara = $_POST['negara'];
 $tahunS = $_POST['tahunS'];
+$tahunakaS = $_POST['tahunakaS'];
 
-$sql = "INSERT INTO `studylanjut`(`nik`, `pendiklanjut`, `bidangstudy`, `univ`, `negara`, `tahunmulaistudi`) VALUES ('$nik','$pendiklanjut','$bidstudy','$univ','$negara','$tahunS')";
+$sql = "INSERT INTO `studylanjut`(`nik`, `pendiklanjut`, `bidangstudy`, `univ`, `negara`, `tahunmulaistudi`, `tahunaka`) VALUES ('$nik','$pendiklanjut','$bidstudy','$univ','$negara','$tahunS', '$tahunakaS')";
 $query= mysqli_query($conn,$sql);
 $lastId = mysqli_insert_id($conn);
 if($query ==true)

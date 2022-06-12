@@ -6,9 +6,10 @@ $bidstudy = $_POST['bidstudy'];
 $univ = $_POST['univ'];
 $negara = $_POST['negara'];
 $tahun = $_POST['tahun'];
+$tahunaka = $_POST['tahunaka'];
 $id = $_POST['id'];
 
-$sql = "UPDATE `studylanjut` SET `nik`='$nik',`pendiklanjut`='$pendiklanjut',`bidangstudy`='$bidstudy',`univ`='$univ',`negara`='$negara',`tahunmulaistudi`='$tahun' WHERE `id`='$id'";
+$sql = "UPDATE `studylanjut` SET `nik`='$nik',`pendiklanjut`='$pendiklanjut',`bidangstudy`='$bidstudy',`univ`='$univ',`negara`='$negara',`tahunmulaistudi`='$tahun', `tahunaka`='$tahunaka' WHERE `id`='$id'";
 $query= mysqli_query($conn,$sql);
 $lastId = mysqli_insert_id($conn);
 if($query ==true)

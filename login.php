@@ -41,7 +41,7 @@ if (isset($_POST["login"])) {
                     header("Location: detail_dosen.php");
                     exit;
                 } else {
-                    $user = query("SELECT * FROM users WHERE username = '$username'")[0];
+                    $user = queryy("SELECT * FROM users WHERE username = '$username'")[0];
                     $id = $user['id'];
                     mysqli_query($conn, "INSERT INTO `dosen`(`id`, `nik`) VALUES ('','$username')");
                     $_SESSION["login"] = true;

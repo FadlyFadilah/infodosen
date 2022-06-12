@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var nik = $('#getnik').val();
     $('#study').DataTable({
         "fnCreatedRow": function(nRow, aData, iDataIndex) {
             $(nRow).attr('id', aData[0]);
@@ -8,12 +9,12 @@ $(document).ready(function() {
         'paging': 'true',
         'order': [],
         'ajax': {
-            'url': 'pages/data_study.php',
+            'url': 'pages/data_study.php?nik='+nik,
             'type': 'post',
         },
         "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [5]
+                "aTargets": [6]
             },
 
         ],
@@ -27,10 +28,11 @@ $(document).ready(function() {
                 "width": "5%"
             },
             {
-                "targets": [2, 3],
+                "targets": [2, 3, 6],
                 "className": "text-left",
                 "width": "10d%"
             }
+            
         ]
     });
 });
@@ -42,7 +44,8 @@ $(document).on('submit', '#addStudy', function(e) {
     var univ = $('#univ').val();
     var negara = $('#negara').val();
     var tahunS = $('#tahunS').val();
-    if (pendiklanjut != '' && bidstudy != '' && nik != '' && univ != '' && negara != '' && negara != '') {
+    var tahunakaS = $('#tahunakaS').val();
+    if (pendiklanjut != '' && bidstudy != '' && nik != '' && univ != '' && negara != '' && tahunS != '' && tahunakaS != '') {
         $.ajax({
             url: "pages/add_study.php",
             type: "post",
@@ -53,6 +56,7 @@ $(document).on('submit', '#addStudy', function(e) {
                 univ: univ,
                 negara: negara,
                 tahunS: tahunS,
+                tahunakaS: tahunakaS,
             },
             success: function(data) {
                 var json = JSON.parse(data);
@@ -79,9 +83,10 @@ $(document).on('submit', '#updateStudy', function(e) {
     var univ = $('#univ_').val();
     var negara = $('#negara_').val();
     var tahun = $('#tahunS_').val();
+    var tahunaka = $('#tahunakaS_').val();
     var trid = $('#tridS').val();
     var id = $('#idS_').val();
-    if (nik != '' && pendiklanjut != '' && bidstudy != '' && univ != '' && negara != '' && tahun != '') {
+    if (nik != '' && pendiklanjut != '' && bidstudy != '' && univ != '' && negara != '' && tahun != '' && tahunaka != '') {
         $.ajax({
             url: "pages/update_study.php",
             type: "post",
@@ -92,6 +97,7 @@ $(document).on('submit', '#updateStudy', function(e) {
                 univ: univ,
                 negara: negara,
                 tahun: tahun,
+                tahunaka: tahunaka,
                 id: id
             },
             success: function(data) {
@@ -101,7 +107,7 @@ $(document).on('submit', '#updateStudy', function(e) {
                     table = $('#study').DataTable();
                     var button = '<td><div class="d-flex"><a href="javascript:void();" data-id="' + id + '" class="btn btn-info btn-sm editbtnS">Edit</a>  <a href="#!"  data-id="' + id + '"  class="btn btn-danger btn-sm deleteBtnS">Delete</a></div></td>';
                     var row = table.row("[id='" + trid + "']");
-                    row.row("[id='" + trid + "']").data([pendiklanjut, bidstudy, univ, negara, tahun, button]);
+                    row.row("[id='" + trid + "']").data([pendiklanjut, bidstudy, univ, negara, tahun, tahunaka, button]);
                     $('#editModalStudy').modal('hide');
                 } else {
                     alert('failed');

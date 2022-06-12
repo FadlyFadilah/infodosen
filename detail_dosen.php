@@ -8,7 +8,7 @@ if (!isset($_SESSION["login"])) {
 require 'pages/fungsi.php';
 if ($_SESSION["level"] === "admin") {
 	$nik = $_GET["nik"];
-	$dosen = query("SELECT * FROM `dosen` WHERE `nik` = '$nik'")[0];
+	$dosen = queryy("SELECT * FROM `dosen` WHERE `nik` = '$nik'")[0];
 
 
 	if (isset($_POST["updateBio"])) {
@@ -34,7 +34,7 @@ if ($_SESSION["level"] === "admin") {
 
 
 	$idn = $_SESSION["nik"];
-	$dosen = query("SELECT * FROM `dosen` WHERE `nik` = '$idn'")[0];
+	$dosen = queryy("SELECT * FROM `dosen` WHERE `nik` = '$idn'")[0];
 
 
 	if (isset($_POST["updateBio"])) {
@@ -65,6 +65,12 @@ if ($_SESSION["level"] === "admin") {
 <?php include 'head.php' ?>
 
 <body class="hold-transition sidebar-mini text-sm layout-navbar-fixed layout-fixed">
+	<?php if ($_SESSION['level'] === 'admin') : ?>
+		<input type="text" id="getnik" value="<?= $nik ?>">
+	<?php endif; ?>
+	<?php if ($_SESSION['level'] === 'dosen') : ?>
+		<input type="text" id="getnik" value="<?= $_SESSION['nik'] ?>">
+	<?php endif; ?>
 
 	<div class="wrapper">
 		<!-- Navbar -->
@@ -102,48 +108,39 @@ if ($_SESSION["level"] === "admin") {
 									<h3 class="card-title">Profil Dosen</h3>
 								</div>
 								<div class="card-body box-profile">
-									<div class="text-center">
-										<img src='' class='profile-user-img img-responsive' style='height: 128px'>
-										<h3 class="profile-username text-center">#</h3>
-										<p class="text-muted text-center lead">#</p>
-									</div>
 									<ul class="list-group list-group-unbordered mb-3">
 										<li class="list-group-item">
-											<b>Lokasi Data</b> <a class="float-right">sta</a>
+											<b>NIK</b> <a class="float-right"><?= $dosen['nik']; ?></a>
 										</li>
 										<li class="list-group-item">
-											<b>Angkatan</b> <a class="float-right">2012</a>
+											<b>Nama</b> <a class="float-right"><?= $dosen['nama_lengkap']; ?></a>
 										</li>
 										<li class="list-group-item">
-											<b>Status Aktivasi</b> <a class="float-right">AKTIF</a>
+											<b>NIDN</b> <a class="float-right"><?= $dosen['nidn']; ?></a>
 										</li>
 										<li class="list-group-item">
-											<b>Data SIDPP (SKS)</b> <a class="float-right">DPP: 0 Non-DPP: 0</a>
+											<b>Jabatan Fungsional</b> <a class="float-right"><?= $dosen['jafung']; ?></a>
 										</li>
 									</ul>
 								</div>
 								<div class="card-footer">
 									<div class="row">
-										<!--<div class="col-3">
-							<div class="btn-group">
-								<button type="button" class="btn btn-info">Cetak</button>
-								<button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
-									<span class="sr-only">Toggle Dropdown</span>
-									<div class="dropdown-menu" role="menu">
-										<a href="javascript:void(0)" class="dropdown-item" onclick='return cetak_krs("10060112025-2021-2");'>Kartu Rencana Studi (KRS)</a>
-										<a href="javascript:void(0)" class="dropdown-item" onclick='return cetak_khs("10060112025-2021-2");'>Kartu Hasil Studi (KHS)</a>
-									</div>
-								</button>
-							</div>
-						</div>
-						&ensp;-->
-										<!-- <div class="col-8">
-											<input type="hidden" name="link" id="link" class="form-control"
-												value="index.php?2d1ba0909240e84b66b196287ef1f475f123fb8326bdc29b476b901b912ba730"
-												readonly>
-											<a href="javascript:void(0)"><button type="button"
-													onclick='return input_lulusan("10060112025");'
-													class="input-lulusan btn btn-primary">Input Tanggal
+										<!-- <div class="col-3">
+											<div class="btn-group">
+												<button type="button" class="btn btn-info">Cetak</button>
+												<button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
+													<span class="sr-only">Toggle Dropdown</span>
+													<div class="dropdown-menu" role="menu">
+														<a href="javascript:void(0)" class="dropdown-item" onclick='return cetak_krs("10060112025-2021-2");'>Kartu Rencana Studi (KRS)</a>
+														<a href="javascript:void(0)" class="dropdown-item" onclick='return cetak_khs("10060112025-2021-2");'>Kartu Hasil Studi (KHS)</a>
+													</div>
+												</button>
+											</div>
+										</div>
+										&ensp;
+										<div class="col-8">
+											<input type="hidden" name="link" id="link" class="form-control" value="index.php?2d1ba0909240e84b66b196287ef1f475f123fb8326bdc29b476b901b912ba730" readonly>
+											<a href="javascript:void(0)"><button type="button" onclick='return input_lulusan("10060112025");' class="input-lulusan btn btn-primary">Input Tanggal
 													Lulus</button></a>
 										</div> -->
 									</div>
@@ -167,9 +164,6 @@ if ($_SESSION["level"] === "admin") {
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" id="custom-tabs-one-jabfung-tab" data-toggle="pill" href="#jabfung-tab" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Data Kenaikan Jabfung</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="custom-tabs-one-bkd-tab" data-toggle="pill" href="#bkd-tab" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Data BKD dan Sister</a>
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" id="custom-tabs-one-kompetensi-tab" data-toggle="pill" href="#kompetensi-tab" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Data Peningkatan Kompetensi Dosen</a>
@@ -238,6 +232,17 @@ if ($_SESSION["level"] === "admin") {
 															<label for="matkul">Mata Kuliah yang di ampu </label>
 															<input type="text" name="matkul" value="<?= $dosen['matkul']; ?>" class="form-control" id="matkul" placeholder="Masukan Mata Kuliah yang di ampu ">
 														</div>
+														<div class="form-group">
+															<label for="status" class="col-md-3 form-label">status</label>
+															<select type="text" class="form-control" id="status" name="status">
+																<option value="">-- Pilih! --</option>
+																<?php if ($dosen['status'] === 'tetap' || 'tidakTetap') : ?>
+																	<option selected value="<?= $dosen['status']; ?>"><?= $dosen['status']; ?></option>
+																<?php endif; ?>
+																<option value="tetap">Tetap</option>
+																<option value="tidakTetap">Tidak Tetap</option>
+															</select>
+														</div>
 														<button type="submit" name="updateBio" class="btn btn-success">Update</button>
 													</form>
 												</div>
@@ -262,8 +267,10 @@ if ($_SESSION["level"] === "admin") {
 													<table id="rekognisi" class="table table-bordered table-striped table-hover">
 														<thead>
 															<tr>
+																<th class="text-center">Bidang Ahli</th>
 																<th class="text-center">Rekognisi</th>
 																<th class="text-center">Wilayah</th>
+																<th class="text-center">Tahun Akademik</th>
 																<th class="text-center">Aksi</th>
 															</tr>
 														</thead>
@@ -297,6 +304,7 @@ if ($_SESSION["level"] === "admin") {
 																<th class="text-center">Universitas</th>
 																<th class="text-center">Neraga</th>
 																<th class="text-center">Tahun Mulai Study</th>
+																<th class="text-center">Tahun Akademik</th>
 																<th class="text-center">Aksi</th>
 															</tr>
 														</thead>
@@ -311,20 +319,6 @@ if ($_SESSION["level"] === "admin") {
 											<div class="card">
 												<div class="card-header">
 													Data Kenaikan Jabatan Fungsional
-												</div>
-												<div class="card-body">
-													<h5 class="card-title">Special title treatment</h5>
-													<p class="card-text">With supporting text below as a natural lead-in
-														to additional content.</p>
-													<a href="#" class="btn btn-primary">Go somewhere</a>
-												</div>
-											</div>
-										</div>
-
-										<div class="tab-pane fade show" id="bkd-tab" role="tabpanel" aria-labelledby="custom-tabs-one-bkd-tab">
-											<div class="card">
-												<div class="card-header">
-													Data BKD dan Sister
 												</div>
 												<div class="card-body">
 													<h5 class="card-title">Special title treatment</h5>
@@ -358,6 +352,7 @@ if ($_SESSION["level"] === "admin") {
 																<th class="text-center">Waktu</th>
 																<th class="text-center">Sebagai</th>
 																<th class="text-center">Tingkat</th>
+																<th class="text-center">Tahun Akademik</th>
 																<th class="text-center">Aksi</th>
 															</tr>
 														</thead>
@@ -397,6 +392,12 @@ if ($_SESSION["level"] === "admin") {
 												<input type="hidden" id="nik" name="nik" value="<?= $dosen['nik']; ?>">
 											<?php } ?>
 											<div class="mb-3 row">
+												<label for="bidangah" class="col-md-3 form-label">Bidang Ahli</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="bidangah" name="bidangah">
+												</div>
+											</div>
+											<div class="mb-3 row">
 												<label for="rekognisis" class="col-md-3 form-label">Rekognisi</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="rekognisis" name="rekognisis">
@@ -411,6 +412,12 @@ if ($_SESSION["level"] === "admin") {
 														<option value="nasional">Nasional</option>
 														<option value="internasional">Internasional</option>
 													</select>
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tahunaka" class="col-md-3 form-label">Tahun Akademik</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunaka" name="tahunaka">
 												</div>
 											</div>
 											<div class="text-center">
@@ -444,6 +451,12 @@ if ($_SESSION["level"] === "admin") {
 												<input type="hidden" id="nik_" name="nik" value="">
 											<?php } ?>
 											<div class="mb-3 row">
+												<label for="bidangah_" class="col-md-3 form-label">Bidang Ahli</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="bidangah_" name="bidangah_">
+												</div>
+											</div>
+											<div class="mb-3 row">
 												<label for="rekognisis" class="col-md-3 form-label">Rekognisi</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="rekognisis_" name="rekognisis">
@@ -458,6 +471,12 @@ if ($_SESSION["level"] === "admin") {
 														<option value="nasional">Nasional</option>
 														<option value="internasional">Internasional</option>
 													</select>
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tahunaka_" class="col-md-3 form-label">Tahun Akademik</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunaka_" name="tahunaka_">
 												</div>
 											</div>
 											<div class="text-center">
@@ -518,6 +537,12 @@ if ($_SESSION["level"] === "admin") {
 													<input type="text" class="form-control" id="tahunS" name="tahunS">
 												</div>
 											</div>
+											<div class="mb-3 row">
+												<label for="tahunakaS" class="col-md-3 form-label">Tahun Akademik</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunakaS" name="tahunakaS">
+												</div>
+											</div>
 											<div class="text-center">
 												<button type="submit" class="btn btn-primary">Submit</button>
 											</div>
@@ -576,6 +601,12 @@ if ($_SESSION["level"] === "admin") {
 												<label for="tahunS" class="col-md-3 form-label">Tahun Mulai Study</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="tahunS_" name="tahunS">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tahunakaS_" class="col-md-3 form-label">Tahun Akademik</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunakaS_" name="tahunakaS_">
 												</div>
 											</div>
 											<div class="text-center">
@@ -645,6 +676,12 @@ if ($_SESSION["level"] === "admin") {
 													</select>
 												</div>
 											</div>
+											<div class="mb-3 row">
+												<label for="tahunakaK" class="col-md-3 form-label">Tahun Akademik</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunakaK" name="tahunakaK">
+												</div>
+											</div>
 											<div class="text-center">
 												<button type="submit" class="btn btn-primary">Submit</button>
 											</div>
@@ -712,6 +749,12 @@ if ($_SESSION["level"] === "admin") {
 														<option value="nasional">Nasional</option>
 														<option value="internasional">Internasional</option>
 													</select>
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tahunakaK_" class="col-md-3 form-label">Tahun Akademik</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunakaK_" name="tahunakaK_">
 												</div>
 											</div>
 											<div class="text-center">

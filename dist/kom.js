@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var nik = $('#getnik').val();
     $('#kom').DataTable({
         "fnCreatedRow": function(nRow, aData, iDataIndex) {
             $(nRow).attr('id', aData[0]);
@@ -8,12 +9,12 @@ $(document).ready(function() {
         'paging': 'true',
         'order': [],
         'ajax': {
-            'url': 'pages/data_kom.php',
+            'url': 'pages/data_kom.php?nik='+nik,
             'type': 'post',
         },
         "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [5]
+                "aTargets": [6]
             },
 
         ],
@@ -27,7 +28,7 @@ $(document).ready(function() {
                 "width": "5%"
             },
             {
-                "targets": [2, 3],
+                "targets": [2, 3, 6],
                 "className": "text-left",
                 "width": "10d%"
             }
@@ -42,7 +43,8 @@ $(document).on('submit', '#addKom', function(e) {
     var waktu = $('#waktuK').val();
     var sebagai = $('#sebagai').val();
     var tingkat = $('#tingkatK').val();
-    if (kegiatan != '' && tempat != '' && nik != '' && waktu != '' && sebagai != '' && tingkat != '') {
+    var tahunaka = $('#tahunakaK').val();
+    if (kegiatan != '' && tempat != '' && nik != '' && waktu != '' && sebagai != '' && tingkat != '' && tahunaka != '') {
         $.ajax({
             url: "pages/add_kom.php",
             type: "post",
@@ -53,6 +55,7 @@ $(document).on('submit', '#addKom', function(e) {
                 waktu: waktu,
                 sebagai: sebagai,
                 tingkat: tingkat,
+                tahunaka: tahunaka,
             },
             success: function(data) {
                 var json = JSON.parse(data);
@@ -79,9 +82,10 @@ $(document).on('submit', '#updateKom', function(e) {
     var waktu = $('#waktuK_').val();
     var sebagai = $('#sebagai_').val();
     var tingkat = $('#tingkatK_').val();
+    var tahunaka = $('#tahunakaK_').val();
     var trid = $('#tridK').val();
     var id = $('#idK_').val();
-    if (nik != '' && kegiatan != '' && tempat != '' && waktu != '' && sebagai != '' && tingkat != '') {
+    if (nik != '' && kegiatan != '' && tempat != '' && waktu != '' && sebagai != '' && tingkat != '' && tahunaka != '') {
         $.ajax({
             url: "pages/update_kom.php",
             type: "post",
@@ -92,6 +96,7 @@ $(document).on('submit', '#updateKom', function(e) {
                 waktu: waktu,
                 sebagai: sebagai,
                 tingkat: tingkat,
+                tahunaka: tahunaka,
                 id: id
             },
             success: function(data) {
@@ -101,7 +106,7 @@ $(document).on('submit', '#updateKom', function(e) {
                     table = $('#kom').DataTable();
                     var button = '<td><div class="d-flex"><a href="javascript:void();" data-id="' + id + '" class="btn btn-info btn-sm editbtnK">Edit</a>  <a href="#!"  data-id="' + id + '"  class="btn btn-danger btn-sm deleteBtnK">Delete</a></div></td>';
                     var row = table.row("[id='" + trid + "']");
-                    row.row("[id='" + trid + "']").data([kegiatan, tempat, waktu, sebagai, tingkat, button]);
+                    row.row("[id='" + trid + "']").data([kegiatan, tempat, waktu, sebagai, tingkat, tahunaka, button]);
                     $('#editKom').modal('hide');
                 } else {
                     alert('failed');
@@ -133,6 +138,7 @@ $('#kom').on('click', '.editbtnK ', function(event) {
             $('#waktuK_').val(json.waktu);
             $('#sebagai_').val(json.sebagai);
             $('#tingkatK_').val(json.tingkat);
+            $('#tahunakaK_').val(json.tahunaka);
             $('#idK_').val(id);
             $('#tridK').val(trid);
         }

@@ -11,7 +11,7 @@ $columns = [
 	1 => 'nik',
 	2 => 'nidn',
 	3 => 'nama_lengkap',
-	4 => 'matkul',
+	4 => 'status',
 ];
 
 if(isset($_POST['search']['value']))
@@ -20,7 +20,7 @@ if(isset($_POST['search']['value']))
 	$sql .= " WHERE nik like '%".$search_value."%'";
 	$sql .= " OR nidn like '%".$search_value."%'";
 	$sql .= " OR nama_lengkap like '%".$search_value."%'";
-	$sql .= " OR matkul like '%".$search_value."%'";
+	$sql .= " OR status like '%".$search_value."%'";
 }
 
 if(isset($_POST['order']))
@@ -50,7 +50,7 @@ while($row = mysqli_fetch_assoc($query))
 	$sub_array[] = $row['nik'];
 	$sub_array[] = $row['nidn'];
 	$sub_array[] = '<a href="detail_dosen.php?nik='.$row['nik'].'" class="btn btn-link btn-sm" >'.$row['nama_lengkap'].'</a>';
-	$sub_array[] = $row['matkul'];
+	$sub_array[] = $row['status'];
 	$sub_array[] = '<div class="d-flex"><a href="javascript:" data-id="'.$row['id'].'"  class="btn btn-info btn-sm editbtn" >Edit</a>  <a href="javascript:" data-id="'.$row['id'].'"  class="btn btn-danger btn-sm deleteBtn" >Delete</a></div>';
 	$data[] = $sub_array;
 }

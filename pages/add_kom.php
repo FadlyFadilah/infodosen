@@ -6,8 +6,9 @@ $tempat = $_POST['tempat'];
 $waktu = $_POST['waktu'];
 $sebagai = $_POST['sebagai'];
 $tingkat = $_POST['tingkat'];
+$tahunaka = $_POST['tahunaka'];
 
-$sql = "INSERT INTO `kopetensi`(`nik`, `kegiatan`, `tempat`, `waktu`, `sebagai`, `tingkat`) VALUES ('$nik','$kegiatan','$tempat','$waktu','$sebagai','$tingkat')";
+$sql = "INSERT INTO `kopetensi`(`nik`, `kegiatan`, `tempat`, `waktu`, `sebagai`, `tingkat`, `tahunaka`) VALUES ('$nik','$kegiatan','$tempat','$waktu','$sebagai','$tingkat','$tahunaka')";
 $query= mysqli_query($conn,$sql);
 $lastId = mysqli_insert_id($conn);
 if($query ==true)
