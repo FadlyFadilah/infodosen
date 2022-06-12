@@ -5,6 +5,12 @@ $nidn = $_POST['nidn'];
 $nama = $_POST['nama'];
 $matkul = $_POST['matkul'];
 
+// enkripsi password
+$password = password_hash($nik, PASSWORD_DEFAULT);
+
+// tambahkan userbaru ke database
+mysqli_query($conn, "INSERT INTO users VALUES('', '$nik', '$password', 'dosen')");
+
 $sql = "INSERT INTO `dosen`(`nik`, `nidn`, `nama_lengkap`, `matkul`) VALUES ('$nik','$nidn','$nama','$matkul')";
 $query= mysqli_query($conn,$sql);
 $lastId = mysqli_insert_id($conn);

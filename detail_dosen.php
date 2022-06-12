@@ -224,9 +224,8 @@ if ($_SESSION["level"] === "admin") {
 															<input type="text" name="bidang" value="<?= $dosen['bidang_ahli']; ?>" class="form-control" id="bidang" placeholder="Masukan Bidang Ahli">
 														</div>
 														<div class="form-group">
-															<label for="sertipen">Sertifikat Pendidikan</label>
-															<input type="file" name="sertipen" class="form-control" id="sertipen" placeholder="Masukan Sertifikat Pendidikan">
-															<a href="file/biodosen/<?= $dosen['sertipedik']; ?>" class="btn btn-link"><?= $dosen['sertipedik']; ?></a>
+															<label for="sertipen">Nomor Sertifikat Pendidikan</label>
+															<input type="text" name="sertipen" value="<?= $dosen['sertipedik']; ?>" class="form-control" id="sertipen" placeholder="Masukan Nomor Sertifikat Pendidikan">
 														</div>
 														<div class="form-group">
 															<label for="matkul">Mata Kuliah yang di ampu </label>
@@ -299,7 +298,7 @@ if ($_SESSION["level"] === "admin") {
 													<table id="study" class="table table-bordered table-striped table-hover">
 														<thead>
 															<tr>
-																<th class="text-center">Pendidikan Lanjut</th>
+																<th class="text-center">Jenjang</th>
 																<th class="text-center">Bidang Study</th>
 																<th class="text-center">Universitas</th>
 																<th class="text-center">Neraga</th>
@@ -508,7 +507,7 @@ if ($_SESSION["level"] === "admin") {
 												<input type="hidden" id="nikS" name="nik" value="<?= $dosen['nik']; ?>">
 											<?php } ?>
 											<div class="mb-3 row">
-												<label for="pendiklanjut" class="col-md-3 form-label">Pendidikan Lanjut</label>
+												<label for="pendiklanjut" class="col-md-3 form-label">Jenjang</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="pendiklanjut" name="pendiklanjut">
 												</div>
@@ -574,7 +573,7 @@ if ($_SESSION["level"] === "admin") {
 												<input type="hidden" id="nikS_" name="nik" value="<?= $dosen['nik']; ?>">
 											<?php } ?>
 											<div class="mb-3 row">
-												<label for="pendiklanjut" class="col-md-3 form-label">Pendidikan Lanjut</label>
+												<label for="pendiklanjut" class="col-md-3 form-label">Jenjang</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="pendiklanjut_" name="pendiklanjut">
 												</div>

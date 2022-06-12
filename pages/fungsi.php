@@ -83,46 +83,6 @@ function dosencsv()
     return mysqli_affected_rows($conn);
 }
 
-
-function uploadbio() {
-
-    $namaFile = $_FILES['sertipen']['name'];
-    $ukuranFile = $_FILES['sertipen']['size'];
-    $error = $_FILES['sertipen']['error'];
-    $tmpName = $_FILES['sertipen']['tmp_name'];
-
-    // cek apakah tidak ada file yang diupload
-    if( $error === 4 ) {
-        return null;
-    }
-
-    // cek apakah yang diupload adalah gambar
-    $ekstensiFileValid = ['pdf', 'doc', 'docx', 'jpg', 'png', 'jpeg'];
-    $ekstensiFile = explode('.', $namaFile);
-    $ekstensiFile = strtolower(end($ekstensiFile));
-    if( !in_array($ekstensiFile, $ekstensiFileValid) ) {
-        echo "<script>
-                alert('yang anda upload bukan file!');
-            </script>";
-        return false;
-    }
-
-    // cek jika ukurannya terlalu besar
-    if( $ukuranFile > 5242880 ) {
-        echo "<script>
-                alert('ukuran file terlalu besar!');
-            </script>";
-        return false;
-    }
-
-    // generate nama gambar baru
-    $uniqid = rand(0, 10000);
-    $namaFileBaru = $uniqid . $namaFile;
-
-    move_uploaded_file($tmpName, 'file/biodosen/' . $namaFileBaru);
-
-    return $namaFileBaru;
-}
 function ubahbio($data)
 {
     global $conn;
@@ -139,14 +99,8 @@ function ubahbio($data)
     $alamat = htmlspecialchars($data["alamat"]);
     $bidang = htmlspecialchars($data["bidang"]);
     $matkul = htmlspecialchars($data["matkul"]);
-    $sertiLama = $data["sertipenLama"];
+    $sertipen = htmlspecialchars($data["sertipen"]);
 
-    // cek apakah user pilih file baru atau tidak
-    if ($_FILES['sertipen']['error'] === 4) {
-        $sp = $sertiLama;
-    } else {
-        $sp = uploadbio();
-    }
 
     $query = "UPDATE dosen SET
                         nik = '$nik',
@@ -160,7 +114,7 @@ function ubahbio($data)
                         alamat = '$alamat',
                         bidang_ahli = '$bidang',
                         matkul = '$matkul',
-                        sertipedik = '$sp'
+                        sertipedik = '$sertipen'
                     WHERE id = $id
                     ";
 

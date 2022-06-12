@@ -69,11 +69,12 @@ if (isset($_POST["doseni"])) {
                                         <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
                                             <span class="sr-only">Toggle Dropdown</span>
                                             <div class="dropdown-menu" role="menu">
-                                                
+
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick='ex_dosen();'>Daftar Dosen (.xls)</a>
-                                                <a class="dropdown-item" href="pages/ex_dosen.php">Daftar Rekognisi(.pfd)</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick='export_perwalian_maba();'>Perwalian Mahasiswa Baru
-                                                    (06011)</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick='ex_rekog();'>Daftar Rekognisi(.pfd)</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick='ex_rekogE();'>Daftar Rekognisi (.xls)</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick='ex_study();'>Daftar Study lanjut (.xls)</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick='ex_kom();'>Daftar Kompetensi Dosen (.xls)</a>
                                             </div>
                                         </button>
                                     </div>
@@ -274,8 +275,28 @@ if (isset($_POST["doseni"])) {
                 window.open(url, '_blank', 'status=no');
                 return false;
             }
+
             function ex_dosen() {
                 var url = "pages/ex_dosen.php";
+
+                window.open(url, '_blank', 'status=no');
+                return false;
+            }
+
+            function ex_rekogE() {
+                var url = "pages/ex_rekogE.php";
+
+                window.open(url, '_blank', 'status=no');
+                return false;
+            }
+            function ex_study() {
+                var url = "pages/ex_study.php";
+
+                window.open(url, '_blank', 'status=no');
+                return false;
+            }
+            function ex_kom() {
+                var url = "pages/ex_kom.php";
 
                 window.open(url, '_blank', 'status=no');
                 return false;
