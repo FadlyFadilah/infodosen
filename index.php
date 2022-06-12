@@ -69,10 +69,9 @@ if (isset($_POST["doseni"])) {
                                         <button type="button" class="btn btn-info dropdown-toggle dropdown-icon" data-toggle="dropdown">
                                             <span class="sr-only">Toggle Dropdown</span>
                                             <div class="dropdown-menu" role="menu">
-
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick='ex_rekog();'>Daftar Rekognisi</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick='export_mhs_aktif();'>Daftar Mahasiswa Aktif
-                                                    (Statistika)</a>
+                                                
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick='ex_dosen();'>Daftar Dosen (.xls)</a>
+                                                <a class="dropdown-item" href="pages/ex_dosen.php">Daftar Rekognisi(.pfd)</a>
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick='export_perwalian_maba();'>Perwalian Mahasiswa Baru
                                                     (06011)</a>
                                             </div>
@@ -271,6 +270,12 @@ if (isset($_POST["doseni"])) {
 
             function ex_rekog() {
                 var url = "pages/ex_rekog.php";
+
+                window.open(url, '_blank', 'status=no');
+                return false;
+            }
+            function ex_dosen() {
+                var url = "pages/ex_dosen.php";
 
                 window.open(url, '_blank', 'status=no');
                 return false;
