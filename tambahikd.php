@@ -14,14 +14,14 @@ if ($_SESSION["level"] === "admin") {
         if (ikd($_POST) > 0) {
             echo "
             <script>
-                alert('data berhasil diubah!');
+                alert('data berhasil Ditambahkan!');
                 window.location.href = 'ikd.php';
             </script>
         ";
         } else {
             echo "
             <script>
-                alert('data gagal diubah!');
+                alert('data gagal Ditambahkan!');
                 document.location.href = 'ikd.php';
             </script>
         ";

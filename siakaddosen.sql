@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2022 at 01:54 PM
+-- Generation Time: Jun 13, 2022 at 04:15 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -44,14 +44,33 @@ CREATE TABLE `dosen` (
   `status` enum('tetap','tidakTetap') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `dosen`
+-- Table structure for table `ikd`
 --
 
-INSERT INTO `dosen` (`id`, `nik`, `nidn`, `nama_lengkap`, `ttl`, `pendidikan_s2`, `pedidikan_s3`, `golongan`, `jafung`, `alamat`, `bidang_ahli`, `sertipedik`, `matkul`, `status`) VALUES
-(9, 'ADSAD', 'ASDA', 'SDAS', '', '', '', '', '', '', '', '', 'ASDAS', 'tetap'),
-(12, 'D111911031', 'A11031', 'Fadly Fadilah', '', '', '', '', '', '', '', '', 'TI', 'tetap'),
-(13, 'fadly', 'asdfasd', 'asdfasdfas', '', '', '', '', '', '', '', '', 'dfasdf', 'tetap');
+CREATE TABLE `ikd` (
+  `id` int(11) NOT NULL,
+  `nik` varchar(20) NOT NULL,
+  `tahunaka` varchar(10) NOT NULL,
+  `file` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jabatan`
+--
+
+CREATE TABLE `jabatan` (
+  `id` int(11) NOT NULL,
+  `nik` varchar(20) NOT NULL,
+  `prodi` varchar(50) NOT NULL,
+  `sebelum` varchar(50) NOT NULL,
+  `sesudah` varchar(50) NOT NULL,
+  `tahunaka` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -70,14 +89,6 @@ CREATE TABLE `kopetensi` (
   `tahunaka` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `kopetensi`
---
-
-INSERT INTO `kopetensi` (`id`, `nik`, `kegiatan`, `tempat`, `waktu`, `sebagai`, `tingkat`, `tahunaka`) VALUES
-(3, 'D111911031', 'asd', 'asd', 'asd', 'penyaji', 'wilayah', ''),
-(4, 'D111911031', 'sada', 'asda', 'sadsd', 'penyaji', 'nasional', '2021/2023');
-
 -- --------------------------------------------------------
 
 --
@@ -92,19 +103,6 @@ CREATE TABLE `rekognisi` (
   `tingkat` enum('wilayah','nasional','internasional') NOT NULL,
   `tahunaka` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `rekognisi`
---
-
-INSERT INTO `rekognisi` (`id`, `nik`, `bidang_ahli`, `rekognisi`, `tingkat`, `tahunaka`) VALUES
-(27, 'D111911031', '12312', 'qwdqwd', 'wilayah', '2012'),
-(28, 'D111911031', '0', 'asdas', 'nasional', ''),
-(29, 'fadly', 'jyfyjf', 'ewef', 'wilayah', '2021'),
-(30, 'D111911031', '0', 'asdasda', 'nasional', '2021'),
-(32, 'D111911031', '0', 'asdas', 'internasional', '2021/2023'),
-(34, 'fadly', 'asasda', 'asdas', 'nasional', '2002'),
-(35, 'fadly', 'asd', 'asdas', 'nasional', '2123');
 
 -- --------------------------------------------------------
 
@@ -122,15 +120,6 @@ CREATE TABLE `studylanjut` (
   `tahunmulaistudi` varchar(4) NOT NULL,
   `tahunaka` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `studylanjut`
---
-
-INSERT INTO `studylanjut` (`id`, `nik`, `pendiklanjut`, `bidangstudy`, `univ`, `negara`, `tahunmulaistudi`, `tahunaka`) VALUES
-(3, 'D111911031', 'asd', 'asda', 'sda', 'asdasd', '2019', '2021'),
-(4, 'D111911031', 'asd', 'asda', 'sdasd', 'asda', '2222', '2021'),
-(6, 'fadly', 'asdas', 'asdasd', 'asdas', 'asdasd', 'asda', '12312');
 
 -- --------------------------------------------------------
 
@@ -150,10 +139,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `level`) VALUES
-(1, 'admin', '$2y$10$lspbW5S9zrWb1Yivmsnqh.9ut0jf4aT8N1AOs6w7v5/RBLzpjI.x6', 'admin'),
-(2, 'fadly', '$2y$10$PBmO8R7eMoXW62C.OgvsceikDBlKZ54QSo2xC6F4yWqr1i/vm6mqe', 'dosen'),
-(3, 'cevy', '$2y$10$uwymYf7mQWF/k.dGXGeEne0GeXr9mCEdBEQugVboj3THhBS1QxdBi', 'dosen'),
-(4, 'd123123123', '$2y$10$7LBEHkR6pL.TTiRPMXhH2.WayHjAvDzTraGQ/u3R2gUx8B5J3DRUW', 'dosen');
+(1, 'admin', '$2y$10$hFAtr8PnsdOqlzHPyWJ5kO1/B47MmKSkqOCQ8hwGDatXoKmVHvIq6', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -163,6 +149,18 @@ INSERT INTO `users` (`id`, `username`, `password`, `level`) VALUES
 -- Indexes for table `dosen`
 --
 ALTER TABLE `dosen`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ikd`
+--
+ALTER TABLE `ikd`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `jabatan`
+--
+ALTER TABLE `jabatan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -197,31 +195,43 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `dosen`
 --
 ALTER TABLE `dosen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `ikd`
+--
+ALTER TABLE `ikd`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `jabatan`
+--
+ALTER TABLE `jabatan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kopetensi`
 --
 ALTER TABLE `kopetensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `rekognisi`
 --
 ALTER TABLE `rekognisi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `studylanjut`
 --
 ALTER TABLE `studylanjut`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
