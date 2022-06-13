@@ -152,8 +152,8 @@ if (isset($_POST["doseni"])) {
                 var nik = $('#nik').val();
                 var nidn = $('#nidn').val();
                 var nama = $('#nama').val();
-                var matkul = $('#matkul').val();
-                if (nidn != '' && nik != '' && nama != '' && matkul != '') {
+                var tetap = $('#tetap').val();
+                if (nidn != '' && nik != '' && nama != '' && tetap != '') {
                     $.ajax({
                         url: "pages/add_dosen.php",
                         type: "post",
@@ -161,7 +161,7 @@ if (isset($_POST["doseni"])) {
                             nidn: nidn,
                             nik: nik,
                             nama: nama,
-                            matkul: matkul
+                            tetap: tetap
                         },
                         success: function(data) {
                             var json = JSON.parse(data);
@@ -185,10 +185,10 @@ if (isset($_POST["doseni"])) {
                 var nik = $('#nik_').val();
                 var nidn = $('#nidn_').val();
                 var nama = $('#nama_').val();
-                var matkul = $('#matkul_').val();
+                var tetap = $('#tetap_').val();
                 var trid = $('#trid').val();
                 var id = $('#id').val();
-                if (nik != '' && nidn != '' && nama != '' && matkul != '') {
+                if (nik != '' && nidn != '' && nama != '' && tetap != '') {
                     $.ajax({
                         url: "pages/update_dosen.php",
                         type: "post",
@@ -196,7 +196,7 @@ if (isset($_POST["doseni"])) {
                             nik: nik,
                             nidn: nidn,
                             nama: nama,
-                            matkul: matkul,
+                            tetap: tetap,
                             id: id
                         },
                         success: function(data) {
@@ -206,7 +206,7 @@ if (isset($_POST["doseni"])) {
                                 table = $('#dosen').DataTable();
                                 var button = '<td><div class="d-flex"><a href="javascript:void();" data-id="' + id + '" class="btn btn-info btn-sm editbtn">Edit</a>  <a href="#!"  data-id="' + id + '"  class="btn btn-danger btn-sm deleteBtn">Delete</a></div></td>';
                                 var row = table.row("[id='" + trid + "']");
-                                row.row("[id='" + trid + "']").data([nik, nidn, nama, matkul, button]);
+                                row.row("[id='" + trid + "']").data([nik, nidn, nama, tetap, button]);
                                 $('#editModalDosen').modal('hide');
                             } else {
                                 alert('failed');
@@ -235,7 +235,7 @@ if (isset($_POST["doseni"])) {
                         $('#nik_').val(json.nik);
                         $('#nidn_').val(json.nidn);
                         $('#nama_').val(json.nama_lengkap);
-                        $('#matkul_').val(json.matkul);
+                        $('#tetap_').val(json.status);
                         $('#id').val(id);
                         $('#trid').val(trid);
                     }
@@ -290,18 +290,21 @@ if (isset($_POST["doseni"])) {
                 window.open(url, '_blank', 'status=no');
                 return false;
             }
+
             function ex_study() {
                 var url = "pages/ex_study.php";
 
                 window.open(url, '_blank', 'status=no');
                 return false;
             }
+
             function ex_kom() {
                 var url = "pages/ex_kom.php";
 
                 window.open(url, '_blank', 'status=no');
                 return false;
             }
+
             function ex_jabatan() {
                 var url = "pages/ex_jabatan.php";
 
@@ -342,9 +345,12 @@ if (isset($_POST["doseni"])) {
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="matkul" class="col-md-3 form-label">Matakuliah yang di Ampu</label>
+                                <label for="tetap" class="col-md-3 form-label">Tetap / Tidak Tepat</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="matkul_" name="matkul">
+                                    <select type="text" class="form-control" id="tetap_" name="tetap">
+                                        <option value="tetap">Tetap</option>
+                                        <option value="tidakTetap">Tidak Tetap</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="text-center">
@@ -388,9 +394,12 @@ if (isset($_POST["doseni"])) {
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="matkul" class="col-md-3 form-label">Matakuliah yang di Ampu</label>
+                                <label for="tetap" class="col-md-3 form-label">Tetap / Tidak Tepat</label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="matkul" name="matkul">
+                                    <select type="text" class="form-control" id="tetap" name="tetap">
+                                        <option value="tetap">Tetap</option>
+                                        <option value="tidakTetap">Tidak Tetap</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="text-center">

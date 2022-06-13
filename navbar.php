@@ -6,8 +6,6 @@
         </li>
     </ul>
     <div class="input-group input-group-sm">
-        <a href="#" class="nav-link" data-toggle="modal" data-target="#setting-periode"><strong>Tahun Akademik
-                2021/2022 (Semester Genap)</strong></a>
     </div>
 </nav>
 <!-- /.navbar -->
@@ -17,7 +15,7 @@
     <!-- Brand Logo -->
     <a href="index.php" class="brand-link">
         <img src="dist/img/logo_unisba.png" alt="Unisba Logo" class="brand-image img-circle" style="opacity: .8">
-        <span class="brand-text font-weight-light">SIAKAD</span>
+        <span class="brand-text font-weight-light">SISFO SDM FK</span>
     </a>
 
     <!-- Sidebar -->

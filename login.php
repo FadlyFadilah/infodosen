@@ -90,7 +90,7 @@ if (isset($_POST["login"])) {
             <span class="logo-lg">
                 <a href="https://sisfo.unisba.ac.id/">
                     <div><img src="https://sisfo.unisba.ac.id/assets/developer/images/logo/1a.png" width="70"></div>
-                    <div><span class="text-orange">portal</span> <b class="text-primary">SISFO</b></div>
+                    <div><span class="text-orange">Fakultas</span> <b class="text-primary">Kedokteran</b></div>
                     <h3 style="margin-top:0;">Universitas Islam Bandung</h3>
                 </a>
             </span>
@@ -135,7 +135,6 @@ if (isset($_POST["login"])) {
         </div>
 
         <div align="center">
-            <footer>Copyright @ 2019-2022 Pengembangan Sistem Informasi dan Teknologi</footer>
         </div>
     </div>
 

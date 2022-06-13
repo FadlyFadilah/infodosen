@@ -18,7 +18,7 @@ if ($_SESSION["level"] === "admin") {
 			echo "
             <script>
                 alert('data berhasil diubah!');
-                window.location.href = 'http://localhost/infodosen/detail_dosen.php?id=$id';
+                window.location.href = 'http://sisfo-sdm-fk.epizy.com/detail_dosen.php?id=$id';
             </script>
         ";
 		} else {
@@ -284,12 +284,12 @@ if ($_SESSION["level"] === "admin") {
 											<div class="card">
 												<div class="card-header d-flex justify-content-between">
 													<div>
-														Study Lanjut
+														Studi Lanjut
 													</div>
 													<div>
 														<!-- Tambah dosen tombol modal -->
 														<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalStudy">
-															Tambah Study Lanjut
+															Tambah Studi Lanjut
 														</button>
 
 													</div>
@@ -299,10 +299,10 @@ if ($_SESSION["level"] === "admin") {
 														<thead>
 															<tr>
 																<th class="text-center">Jenjang</th>
-																<th class="text-center">Bidang Study</th>
+																<th class="text-center">Bidang Studi</th>
 																<th class="text-center">Universitas</th>
-																<th class="text-center">Neraga</th>
-																<th class="text-center">Tahun Mulai Study</th>
+																<th class="text-center">Negara</th>
+																<th class="text-center">Tahun Mulai Studi</th>
 																<th class="text-center">Tahun Akademik</th>
 																<th class="text-center">Aksi</th>
 															</tr>
@@ -512,7 +512,7 @@ if ($_SESSION["level"] === "admin") {
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="modalStudy">Tambah Study Lanjut</h5>
+										<h5 class="modal-title" id="modalStudy">Tambah Studi Lanjut</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
@@ -532,7 +532,7 @@ if ($_SESSION["level"] === "admin") {
 												</div>
 											</div>
 											<div class="mb-3 row">
-												<label for="bidstudy" class="col-md-3 form-label">Bidang Study</label>
+												<label for="bidstudy" class="col-md-3 form-label">Bidang Studi</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="bidstudy" name="bidstudy">
 												</div>
@@ -544,13 +544,13 @@ if ($_SESSION["level"] === "admin") {
 												</div>
 											</div>
 											<div class="mb-3 row">
-												<label for="negara" class="col-md-3 form-label">Neraga</label>
+												<label for="negara" class="col-md-3 form-label">Negara</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="negara" name="negara">
 												</div>
 											</div>
 											<div class="mb-3 row">
-												<label for="tahunS" class="col-md-3 form-label">Tahun Mulai Study</label>
+												<label for="tahunS" class="col-md-3 form-label">Tahun Mulai Studi</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="tahunS" name="tahunS">
 												</div>
@@ -576,7 +576,7 @@ if ($_SESSION["level"] === "admin") {
 							<div class="modal-dialog modal-dialog-centered" role="document">
 								<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="editModalStudy">Tambah Study Lanjut</h5>
+										<h5 class="modal-title" id="editModalStudy">Tambah Studi Lanjut</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											<span aria-hidden="true">&times;</span>
 										</button>
@@ -598,7 +598,7 @@ if ($_SESSION["level"] === "admin") {
 												</div>
 											</div>
 											<div class="mb-3 row">
-												<label for="bidstudy" class="col-md-3 form-label">Bidang Study</label>
+												<label for="bidstudy" class="col-md-3 form-label">Bidang Studi</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="bidstudy_" name="bidstudy">
 												</div>
@@ -610,13 +610,13 @@ if ($_SESSION["level"] === "admin") {
 												</div>
 											</div>
 											<div class="mb-3 row">
-												<label for="negara" class="col-md-3 form-label">Neraga</label>
+												<label for="negara" class="col-md-3 form-label">Negara</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="negara_" name="negara">
 												</div>
 											</div>
 											<div class="mb-3 row">
-												<label for="tahunS" class="col-md-3 form-label">Tahun Mulai Study</label>
+												<label for="tahunS" class="col-md-3 form-label">Tahun Mulai Studi</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="tahunS_" name="tahunS">
 												</div>
@@ -670,7 +670,7 @@ if ($_SESSION["level"] === "admin") {
 											<div class="mb-3 row">
 												<label for="waktuK" class="col-md-3 form-label">Waktu</label>
 												<div class="col-md-9">
-													<input type="text" class="form-control" id="waktuK" name="waktuK">
+													<input type="date" class="form-control" id="waktuK" name="waktuK">
 												</div>
 											</div>
 											<div class="mb-3 row">
@@ -745,7 +745,7 @@ if ($_SESSION["level"] === "admin") {
 											<div class="mb-3 row">
 												<label for="waktuK" class="col-md-3 form-label">Waktu</label>
 												<div class="col-md-9">
-													<input type="text" class="form-control" id="waktuK_" name="waktuK">
+													<input type="date" class="form-control" id="waktuK_" name="waktuK">
 												</div>
 											</div>
 											<div class="mb-3 row">
