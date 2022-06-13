@@ -2,7 +2,7 @@
     <link rel="shortcut icon" type="image/ico" href="dist/img/logo_unisba_hitam.png">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SIAKAD - Universitas Islam Bandung</title>
+    <title>Sisfo SDM FK</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->

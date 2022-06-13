@@ -64,7 +64,7 @@ if (isset($_POST["login"])) {
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Portal Sistem Informasi | Halaman Login :: PSIT</title>
+    <title>Sisfo SDM FK</title>
     <link rel="shortcut icon" type="image/ico" href="https://sisfo.unisba.ac.id/assets/developer/images/logo/1a.png">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -116,9 +116,6 @@ if (isset($_POST["login"])) {
                 </div>
                 <div class="d-flex justify-content-between">
                     <div class="col-xs-6">
-                        <a href="https://sisfo.unisba.ac.id/beranda" type="button" class="btn btn-warning pull-left">
-                            <li class="fa fa-home"></li> Beranda
-                        </a>
                     </div>
                     <div class="col-xs-6">
                         <button type="submit" name="login" class="btn btn-primary pull-right">Masuk <i class="fas fa-sign-in-alt"></i></button>

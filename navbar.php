@@ -49,7 +49,7 @@
                             </a>
                         </li>
                         <?php if ($_SESSION['level'] === 'admin') : ?>
-                            <li class="nav-item"><a href="index.php?1f0dc1519884acfe7a7beacdf6db0e1f" class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
+                            <li class="nav-item"><a href="#" class="nav-link "><i class="fas fa-caret-right nav-icon"></i>
                                     <p>Tidak Aktif</p>
                                 </a>
                             </li>
@@ -63,7 +63,7 @@
                 <li class="nav-header">AKUN</li>
                 <li class="nav-item">
                     <a href="logout.php" class="nav-link"><i class="nav-icon fas fa-power-off"></i>
-                        <p>Kembali ke SISFO</p>
+                        <p>Logout</p>
                     </a>
                 </li>
             </ul>

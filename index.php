@@ -4,6 +4,9 @@ if (!isset($_SESSION["login"])) {
     header("Location: login.php");
     exit;
 }
+if($_SESSION['level'] === 'dosen'){
+    header("Location: login.php");
+}
 require 'pages/fungsi.php';
 if (isset($_POST["doseni"])) {
 
@@ -348,8 +351,8 @@ if (isset($_POST["doseni"])) {
                                 <label for="tetap" class="col-md-3 form-label">Tetap / Tidak Tepat</label>
                                 <div class="col-md-9">
                                     <select type="text" class="form-control" id="tetap_" name="tetap">
-                                        <option value="tetap">Tetap</option>
-                                        <option value="tidakTetap">Tidak Tetap</option>
+                                        <option value="Tetap">Tetap</option>
+                                        <option value="Tidak Tetap">Tidak Tetap</option>
                                     </select>
                                 </div>
                             </div>
@@ -397,8 +400,8 @@ if (isset($_POST["doseni"])) {
                                 <label for="tetap" class="col-md-3 form-label">Tetap / Tidak Tepat</label>
                                 <div class="col-md-9">
                                     <select type="text" class="form-control" id="tetap" name="tetap">
-                                        <option value="tetap">Tetap</option>
-                                        <option value="tidakTetap">Tidak Tetap</option>
+                                        <option value="Tetap">Tetap</option>
+                                        <option value="Tidak Tetap">Tidak Tetap</option>
                                     </select>
                                 </div>
                             </div>
