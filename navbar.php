@@ -57,7 +57,11 @@
                             </li>
                         <?php endif; ?>
                     </ul>
-                </li>
+                <li class="nav-item">
+                    <a href="ikd.php" class="nav-link "><i class="nav-icon fas fa-list"></i>
+                        <p>IKD</p>
+                    </a>
+                </li </li>
                 <li class="nav-header">AKUN</li>
                 <li class="nav-item">
                     <a href="logout.php" class="nav-link"><i class="nav-icon fas fa-power-off"></i>

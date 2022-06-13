@@ -100,7 +100,7 @@ function ubahbio($data)
     $bidang = htmlspecialchars($data["bidang"]);
     $matkul = htmlspecialchars($data["matkul"]);
     $sertipen = htmlspecialchars($data["sertipen"]);
-
+    
 
     $query = "UPDATE dosen SET
                         nik = '$nik',
@@ -118,6 +118,100 @@ function ubahbio($data)
                     WHERE id = $id
                     ";
 
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+
+function upload() {
+
+    $namaFile = $_FILES['file']['name'];
+    $ukuranFile = $_FILES['file']['size'];
+    $error = $_FILES['file']['error'];
+    $tmpName = $_FILES['file']['tmp_name'];
+
+    // cek apakah tidak ada file yang diupload
+    if( $error === 4 ) {
+        return null;
+    }
+
+    // cek apakah yang diupload adalah gambar
+    $ekstensiFileValid = ['pdf', 'doc', 'docx', 'jpg', 'png', 'jpeg'];
+    $ekstensiFile = explode('.', $namaFile);
+    $ekstensiFile = strtolower(end($ekstensiFile));
+    if( !in_array($ekstensiFile, $ekstensiFileValid) ) {
+        echo "<script>
+                alert('yang anda upload bukan file!');
+            </script>";
+        return false;
+    }
+
+    // cek jika ukurannya terlalu besar
+    if( $ukuranFile > 5242880 ) {
+        echo "<script>
+                alert('ukuran file terlalu besar!');
+            </script>";
+        return false;
+    }
+
+    // generate nama gambar baru
+    $uniqid = rand(0, 10000);
+    $namaFileBaru = $uniqid . $namaFile;
+
+    move_uploaded_file($tmpName, 'file/ikd/' . $namaFileBaru);
+
+    return $namaFileBaru;
+}
+function ikd($data) {
+	global $conn;
+
+	$nik = htmlspecialchars($data["nik"]);
+	$tahunaka = htmlspecialchars($data["tahunaka"]);
+
+	// upload gambar
+	$file = upload();
+	if( !$file ) {
+		return false;
+	}
+
+	$query = "INSERT INTO `ikd`(`id`, `nik`, `tahunaka`, `file`) VALUES (NULL,'$nik','$tahunaka','$file')";
+	mysqli_query($conn, $query);
+
+	return mysqli_affected_rows($conn);
+}
+
+function ikdu($data)
+{
+    global $conn;
+
+    $id = $data["id"];
+    $nik = htmlspecialchars($data["nik"]);
+    $tahunaka = htmlspecialchars($data["tahunaka"]);
+    $fileLama = $data["fileLama"];
+
+    // cek apakah user pilih file baru atau tidak
+    if ($_FILES['file']['error'] === 4) {
+        $file = $fileLama;
+    } else {
+        $file = upload();
+    }
+
+    $query = "UPDATE ikd SET
+                        nik = '$nik',
+                        tahunaka = '$tahunaka',
+                        file = '$file'
+                    WHERE id = $id
+                    ";
+
+    mysqli_query($conn, $query);
+
+    return mysqli_affected_rows($conn);
+}
+function ikdh($id)
+{
+    global $conn;
+
+    $query = "DELETE FROM ikd WHERE id = '$id'";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);

@@ -2,7 +2,7 @@
 include('fungsi.php');
 
 $id = $_POST['id'];
-$sql = "DELETE FROM rekognisi WHERE id='$id'";
+$sql = "DELETE FROM jabatan WHERE id='$id'";
 $delQuery =mysqli_query($conn,$sql);
 if($delQuery==true)
 {

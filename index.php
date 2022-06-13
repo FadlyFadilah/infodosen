@@ -75,6 +75,7 @@ if (isset($_POST["doseni"])) {
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick='ex_rekogE();'>Daftar Rekognisi (.xls)</a>
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick='ex_study();'>Daftar Study lanjut (.xls)</a>
                                                 <a class="dropdown-item" href="javascript:void(0)" onclick='ex_kom();'>Daftar Kompetensi Dosen (.xls)</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick='ek_jabatan();'>Daftar Jabatan Kenaikan (.xls)</a>
                                             </div>
                                         </button>
                                     </div>
@@ -297,6 +298,12 @@ if (isset($_POST["doseni"])) {
             }
             function ex_kom() {
                 var url = "pages/ex_kom.php";
+
+                window.open(url, '_blank', 'status=no');
+                return false;
+            }
+            function ex_jabatan() {
+                var url = "pages/ex_jabatan.php";
 
                 window.open(url, '_blank', 'status=no');
                 return false;

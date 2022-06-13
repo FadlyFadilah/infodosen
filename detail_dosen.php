@@ -163,7 +163,7 @@ if ($_SESSION["level"] === "admin") {
 											<a class="nav-link" id="custom-tabs-one-studi-tab" data-toggle="pill" href="#studi-tab" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Data Studi Lanjut</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link" id="custom-tabs-one-jabfung-tab" data-toggle="pill" href="#jabfung-tab" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Data Kenaikan Jabfung</a>
+											<a class="nav-link" id="custom-tabs-one-jabfung-tab" data-toggle="pill" href="#jabfung-tab" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Data Kenaikan Jabatan</a>
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" id="custom-tabs-one-kompetensi-tab" data-toggle="pill" href="#kompetensi-tab" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Data Peningkatan Kompetensi Dosen</a>
@@ -315,15 +315,33 @@ if ($_SESSION["level"] === "admin") {
 										</div>
 
 										<div class="tab-pane fade show" id="jabfung-tab" role="tabpanel" aria-labelledby="custom-tabs-one-jabfung-tab">
-											<div class="card">
-												<div class="card-header">
-													Data Kenaikan Jabatan Fungsional
+										<div class="card">
+												<div class="card-header d-flex justify-content-between">
+													<div>
+														Data Kenaikan Jabatan
+													</div>
+													<div>
+														<!-- Tambah dosen tombol modal -->
+														<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalj">
+															Tambah Data Kenaikan Jabatan
+														</button>
+
+													</div>
 												</div>
-												<div class="card-body">
-													<h5 class="card-title">Special title treatment</h5>
-													<p class="card-text">With supporting text below as a natural lead-in
-														to additional content.</p>
-													<a href="#" class="btn btn-primary">Go somewhere</a>
+												<div class="card-body table-responsive">
+													<table id="jabatan" class="table table-bordered table-striped table-hover">
+														<thead>
+															<tr>
+																<th class="text-center">Prodi</th>
+																<th class="text-center">Sebelum</th>
+																<th class="text-center">Sesudah</th>
+																<th class="text-center">Tahun Akademmik</th>
+																<th class="text-center">Aksi</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -371,6 +389,7 @@ if ($_SESSION["level"] === "admin") {
 						<script src="dist/rekognisi.js"></script>
 						<script src="dist/study.js"></script>
 						<script src="dist/kom.js"></script>
+						<script src="dist/jabatan.js"></script>
 						<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 						<div class="modal fade" id="modalRekognisi" tabindex="-1" role="dialog" aria-labelledby="modalRekognisi" aria-hidden="true">
@@ -754,6 +773,112 @@ if ($_SESSION["level"] === "admin") {
 												<label for="tahunakaK_" class="col-md-3 form-label">Tahun Akademik</label>
 												<div class="col-md-9">
 													<input type="text" class="form-control" id="tahunakaK_" name="tahunakaK_">
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="modalj" tabindex="-1" role="dialog" aria-labelledby="modalj" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="modalj">Tambah Data Kenaikan Jabatan</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="addJ" action="" autocomplete="off">
+											<?php if ($_SESSION["level"] === "dosen") { ?>
+												<input type="hidden" id="nikJ" name="nik" value="<?= $idn; ?>">
+											<?php } ?>
+											<?php if ($_SESSION["level"] === "admin") { ?>
+												<input type="hidden" id="nikJ" name="nik" value="<?= $dosen['nik']; ?>">
+											<?php } ?>
+											<div class="mb-3 row">
+												<label for="prodi" class="col-md-3 form-label">Prodi</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="prodi" name="prodi">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="sebelum" class="col-md-3 form-label">Jabatan Akademik Sebelumnya</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="sebelum" name="sebelum">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="sesudah" class="col-md-3 form-label">Jabatan Akademik Sesudahnya</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="sesudah" name="sesudah">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tahunakaJ" class="col-md-3 form-label">Tahun Akademik</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunakaJ" name="tahunakaJ">
+												</div>
+											</div>
+											<div class="text-center">
+												<button type="submit" class="btn btn-primary">Submit</button>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal fade" id="modaluj" tabindex="-1" role="dialog" aria-labelledby="modaluj" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="modaluj">Update Data Kenaikan Jabatan</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form id="updatej" action="" autocomplete="off">
+											<?php if ($_SESSION["level"] === "dosen") { ?>
+												<input type="hidden" id="nikJ_" name="nik" value="<?= $idn; ?>">
+											<?php } ?>
+											<?php if ($_SESSION["level"] === "admin") { ?>
+												<input type="hidden" id="nikJ_" name="nik" value="<?= $dosen['nik']; ?>">
+											<?php } ?>
+											<input type="hidden" name="id" id="idJ_" value="">
+											<input type="hidden" name="trid" id="tridJ" value="">
+											<div class="mb-3 row">
+												<label for="prodi_" class="col-md-3 form-label">Prodi</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="prodi_" name="prodi_">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="sebelum_" class="col-md-3 form-label">Jabatan Akademik Sebelumnya</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="sebelum_" name="sebelum_">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="sesudah_" class="col-md-3 form-label">Jabatan Akademik Sesudahnya</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="sesudah_" name="sesudah_">
+												</div>
+											</div>
+											<div class="mb-3 row">
+												<label for="tahunakaJ_" class="col-md-3 form-label">Tahun Akademik</label>
+												<div class="col-md-9">
+													<input type="text" class="form-control" id="tahunakaJ_" name="tahunakaJ_">
 												</div>
 											</div>
 											<div class="text-center">
